@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RouteRunner"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="800">
+        Title="RouteRunner v1.0" Height="550" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
@@ -22,9 +22,9 @@
             </Grid.RowDefinitions>
 
             <ui:TextBlock Grid.Row="0" HorizontalAlignment="Left" Width="Auto" Height="Auto"  
-                          Text="Route Runner" FontTypography="TitleLarge" Margin="5,0,0,0" />
+                          Text="Route Runner" FontTypography="TitleLarge" Margin="25,0,0,0" />
 
-            <Grid Grid.Row="1" Margin="15,10,10,10">
+            <Grid Grid.Row="1" Margin="20,10,10,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -44,22 +44,23 @@
                            Margin="5,0,5,0" Appearance="Light" MinWidth="75" MinHeight="40"/>
             </Grid>
 
-            <Grid Grid.Row="2" Margin="15,10,10,10">
+            <Grid Grid.Row="2" Margin="20,10,10,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="45*"/>
+                    <RowDefinition Height="247*"/>
                 </Grid.RowDefinitions>
 
-                <ui:TextBlock Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                <ui:TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" 
                               Width="Auto" FontTypography="Subtitle" Margin="5,0,0,0" Text="Results"/>
 
                 <ui:TextBox Name="resultsTextBox" Grid.Row="1" IsReadOnly="True" 
-                            Margin="5" MinHeight="250" FontSize="19"
+                            Margin="5,5,5,5" MinHeight="250" FontSize="19"
                             VerticalScrollBarVisibility="Auto"
                             HorizontalScrollBarVisibility="Auto"
-                            AcceptsReturn="True" TextWrapping="Wrap"/>
-                
-                
+                            AcceptsReturn="True" TextWrapping="Wrap" Grid.RowSpan="2"/>
+
+
             </Grid>
         </Grid>
 

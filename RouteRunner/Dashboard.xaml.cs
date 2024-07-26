@@ -12,14 +12,6 @@ public partial class MainWindow : Window
 	{
 		InitializeComponent();
 
-		Loaded += (sender, args) =>
-		{
-			Wpf.Ui.Appearance.SystemThemeWatcher.Watch(
-				this,                                  // Window class
-				WindowBackdropType.Mica, // Background type
-				true                                   // Whether to change accents automatically
-			);
-		};
 	}
 
 	private async void goButton_Click(object sender, RoutedEventArgs e)
