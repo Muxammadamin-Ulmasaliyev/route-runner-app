@@ -27,4 +27,6 @@ It's ideal for developers and testers, helping you efficiently validate and trou
 * Adding Logging
 * Creating a section : "Saved API requests"
 * Adding history of requests
+* Adding environment files
+  
   
