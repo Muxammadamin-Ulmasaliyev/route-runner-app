@@ -1,6 +1,10 @@
 ﻿namespace RouteRunnerLibrary;
-
-public enum HttpAction
+public enum HttpVerb
 {
-	GET
+	GET,
+	POST,
+	PATCH,
+	PUT,
+	DELETE,
+	HEAD
 }

@@ -1,0 +1,71 @@
+﻿<Page
+    x:Class="RouteRunner.Pages.CollectionsSidebarPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa5="http://schemas.fontawesome.com/icons/"
+    xmlns:local="clr-namespace:RouteRunner.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="CollectionsSidebarPage"
+    d:DesignHeight="650"
+    d:DesignWidth="400"
+    Background="White"
+    mc:Ignorable="d">
+    <Page.Resources />
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Border
+            Grid.Row="0"
+            BorderBrush="{ui:ThemeResource ControlStrongFillColorDisabledBrush}"
+            BorderThickness="0.5">
+            <Grid Grid.Row="0" Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <ui:Button
+                    Name="addNewFolderButton"
+                    Width="auto"
+                    Height="35"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="{ui:ThemeResource ControlFillColorInputActiveBrush}"
+                    Click="addNewFolderButton_Click"
+                    Cursor="Hand">
+                    <fa5:FontAwesome Icon="Solid_Plus" />
+
+                </ui:Button>
+
+
+                <ui:AutoSuggestBox
+                    Name="searchBox_Collections"
+                    Grid.Column="1"
+                    Margin="5,2,5,2"
+                    VerticalAlignment="Center"
+                    Background="{ui:ThemeResource ControlFillColorInputActiveBrush}"
+                    FontSize="16"
+                    PlaceholderText="Search..."
+                    TextChanged="searchBox_Collections_TextChanged" />
+            </Grid>
+
+        </Border>
+        <Border
+            Grid.Row="1"
+            BorderBrush="{ui:ThemeResource ControlStrongFillColorDisabledBrush}"
+            BorderThickness="0.5">
+            <Grid Grid.Row="1" Background="{ui:ThemeResource ControlFillColorInputActiveBrush}">
+                <TreeView
+                    Name="foldersTree"
+                    AllowDrop="True"
+                    DisplayMemberPath="Name" />
+            </Grid>
+        </Border>
+    </Grid>
+</Page>
