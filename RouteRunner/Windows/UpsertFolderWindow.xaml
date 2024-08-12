@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="UpsertFolderWindow"
+    KeyDown="Window_KeyDown"
     Width="500"
     Height="150"
     WindowStartupLocation="CenterScreen"
@@ -45,10 +46,11 @@
                     MinHeight="40"
                     Margin="15,0,5,0"
                     Appearance="Danger"
+                    Click="cancelButton_Click"
                     Content="Cancel"
                     Cursor="Hand"
                     FontWeight="Bold"
-                    Foreground="White" Click="cancelButton_Click" />
+                    Foreground="White" />
                 <ui:Button
                     Name="saveButton"
                     Grid.Row="1"
@@ -56,6 +58,7 @@
                     MinHeight="40"
                     Margin="5,0,0,0"
                     Appearance="Success"
+                    Click="saveButton_Click"
                     Content="Save"
                     Cursor="Hand"
                     FontWeight="Bold"

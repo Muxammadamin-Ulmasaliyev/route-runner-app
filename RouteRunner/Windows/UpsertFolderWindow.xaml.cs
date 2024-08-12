@@ -1,41 +1,36 @@
 ﻿using RouteRunnerLibrary.Services;
 using RouteRunnerLibrary;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using RouteRunnerLibrary.Models;
+using System.Data;
 
 namespace RouteRunner.Windows;
 
 public partial class UpsertFolderWindow : Window
 {
 	private readonly FolderService _folderService;
+	public event EventHandler<Folder> NewFolderCreatedEvent;
 
-	public UpsertFolderWindow()
+	private int? parentFolderId = null;
+
+	public UpsertFolderWindow(int? parentFolderId = null)
 	{
-
+		this.parentFolderId = parentFolderId;
 		InitializeComponent();
 		_folderService = new(new AppDbContext());
 	}
+
+
 
 	private void folderNameTextBox_KeyDown(object sender, KeyEventArgs e)
 	{
 		if (e.Key == Key.Enter)
 		{
-			CreateNewFolder();
+			saveButton_Click(sender, e);
+			e.Handled = true;
 		}
 
-		e.Handled = true;
 	}
 
 
@@ -43,9 +38,20 @@ public partial class UpsertFolderWindow : Window
 	private Folder CreateNewFolder()
 	{
 
+		Folder createdFolder;
 		var folderName = folderNameTextBox.Text;
+		var parentFolderId = this.parentFolderId;
 
-		var createdFolder = _folderService.CreateFolder(new Folder() { Name = folderName });
+		if (parentFolderId is null)
+		{
+			createdFolder = _folderService.CreateFolder(new Folder() { Name = folderName });
+		}
+		else
+		{
+			createdFolder = _folderService.CreateFolder(new Folder() { Name = folderName, ParentId = parentFolderId });
+		}
+
+
 
 		return createdFolder;
 	}
@@ -53,5 +59,27 @@ public partial class UpsertFolderWindow : Window
 	private void cancelButton_Click(object sender, RoutedEventArgs e)
 	{
 		this.Close();
+	}
+
+	private void saveButton_Click(object sender, RoutedEventArgs e)
+	{
+		var createdFolder = CreateNewFolder();
+		NewFolderCreatedEvent?.Invoke(this, createdFolder);
+		this.Close();
+	}
+
+	private void Window_KeyDown(object sender, KeyEventArgs e)
+	{
+		if (e.Key == Key.Enter)
+		{
+			saveButton_Click(sender, e);
+			e.Handled = true;
+		}
+		if (e.Key == Key.Escape)
+		{
+			cancelButton_Click(sender, e);
+			e.Handled = true;
+		}
+
 	}
 }

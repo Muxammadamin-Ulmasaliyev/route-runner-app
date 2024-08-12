@@ -61,10 +61,20 @@
             BorderBrush="{ui:ThemeResource ControlStrongFillColorDisabledBrush}"
             BorderThickness="0.5">
             <Grid Grid.Row="1" Background="{ui:ThemeResource ControlFillColorInputActiveBrush}">
+                <ui:ProgressRing
+                    x:Name="loadingBar"
+                    Width="50"
+                    Height="50"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    IsIndeterminate="True"
+                    Visibility="Collapsed" />
                 <TreeView
                     Name="foldersTree"
                     AllowDrop="True"
                     DisplayMemberPath="Name" />
+
+
             </Grid>
         </Border>
     </Grid>
