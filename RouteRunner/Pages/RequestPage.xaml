@@ -27,15 +27,73 @@
         <Grid>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="45" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="25" />
             </Grid.RowDefinitions>
             <Border
                 Grid.Row="0"
-                BorderBrush="{ui:ThemeResource ControlStrongFillColorDisabledBrush}"
+                Padding="10,10,10,10"
+                Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}"
+                BorderBrush="{ui:ThemeResource LayerFillColorDefaultBrush}"
                 BorderThickness="0.5">
-                <Grid Grid.Row="0" Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <ui:TextBox
+                            Name="requestNameTextBox"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            LostFocus="requestNameTextBox_LostFocus"
+                            PlaceholderText=""
+                            TextChanged="requestNameTextBox_TextChanged" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <ui:Button
+                            Name="saveRequestButton"
+                            Width="auto"
+                            Height="auto"
+                            Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
+                            Click="saveRequestButton_Click"
+                            CornerRadius="3"
+                            Cursor="Hand"
+                            IsEnabled="True"
+                            ToolTip="Save request">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+
+                                    <fa5:FontAwesome
+                                        Margin="5"
+                                        FontSize="18"
+                                        Foreground="#646464"
+                                        Icon="Solid_Save" />
+                                    <ui:TextBlock
+                                        Width="Auto"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="18"
+                                        FontTypography="BodyStrong"
+                                        Text="Save" />
+                                </StackPanel>
+                            </Button.Content>
+                        </ui:Button>
+                    </StackPanel>
+                </Grid>
             </Border>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -68,7 +126,8 @@
                             Margin="5,0,5,0"
                             VerticalAlignment="Center"
                             Background="{ui:ThemeResource ControlFillColorInputActiveBrush}"
-                            FontWeight="Bold" />
+                            FontWeight="Bold"
+                            SelectionChanged="httpVerbsComboBox_SelectionChanged" />
 
                         <ui:TextBox
                             Name="urlTextBox"
@@ -77,6 +136,7 @@
                             VerticalAlignment="Center"
                             Background="{ui:ThemeResource ControlFillColorInputActiveBrush}"
                             FontSize="18"
+                            TextChanged="urlTextBox_TextChanged"
                             KeyDown="urlTextBox_KeyDown"
                             PlaceholderText="Enter URL" />
                         <ui:Button

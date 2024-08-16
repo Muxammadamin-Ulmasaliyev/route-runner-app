@@ -1,39 +1,46 @@
 ﻿using System.Windows;
-using Wpf.Ui.Appearance;
 using System.Windows.Input;
 using RouteRunner.Pages;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Wpf.Ui.Controls;
 using RouteRunner.CustomControls;
-using System.Windows.Shapes;
+using RouteRunnerLibrary.Models;
+using RouteRunnerLibrary;
+using RouteRunner.Helpers;
 
 namespace RouteRunner;
 
 public partial class MainWindow : Window
 {
 
-	private List<RequestPage> requestsList = new() { new RequestPage() };
+	private List<RequestPage> requestsList;
 
 	private bool shiftKeyPressed = false, ctrlKeyPressed = false;
 	public MainWindow()
 	{
 		InitializeComponent();
 
+		requestsList = new();
 
+		EventNotificationService.Instance.RequestNameChangedInTextBoxEvent += RequestNameChangedInTextBoxEvent; ;
 
-
-		/*Loaded += (sender, args) =>
-		{
-			Wpf.Ui.Appearance.SystemThemeWatcher.Watch(
-				this,                                    // Window class
-				Wpf.Ui.Controls.WindowBackdropType.Mica, // Background type
-				true                                     // Whether to change accents automatically
-			);
-		};*/
-		//SystemThemeWatcher.Watch(this as System.Windows.Window);
 
 	}
+
+	private void RequestNameChangedInTextBoxEvent(object? sender, (int tabIndex, string requestName) data)
+	{
+		if (requestsTabControl.SelectedItem != null)
+		{
+
+			(requestsTabControl.Items[data.tabIndex] as TabItem).Header = data.requestName;
+			//(requestsTabControl.SelectedItem as TabItem).Header = data.requestName;
+
+		}
+	}
+
+	
+
 	private void Window_KeyDown(object sender, KeyEventArgs e)
 	{
 
@@ -106,6 +113,7 @@ public partial class MainWindow : Window
 
 	private void requestsTabControl_Loaded(object sender, RoutedEventArgs e)
 	{
+		/*
 		TabItem newTabItem = new TabItem
 		{
 			Header = "Untitled request", // Text or content of the TabItem header
@@ -125,7 +133,7 @@ public partial class MainWindow : Window
 
 		requestsTabControl.SelectedIndex = 0;
 		requestsTabControl.SelectedItem = requestsTabControl.Items[0];
-
+		*/
 
 	}
 
@@ -178,7 +186,7 @@ public partial class MainWindow : Window
 
 		requestsTabControl.Items.Add(newTabItem);
 
-		requestsList.Add(new RequestPage());
+		requestsList.Add(new RequestPage(requestsTabControl.Items.Count - 1, new SavedRequest() { Name = newTabItem.Header as string, HttpVerb = HttpVerb.GET, Url = "" }));
 
 		requestsTabControl.SelectedItem = requestsTabControl.Items[requestsTabControl.Items.Count - 1];
 		requestsTabControl.SelectedIndex = requestsTabControl.Items.Count - 1;
@@ -201,18 +209,88 @@ public partial class MainWindow : Window
 		}
 	}
 
-	
 
-	
+
+
 
 	private void sidebar_SelectionChanged(object sender, SelectionChangedEventArgs e)
 	{
 		var selected = sidebar.SelectedItem as NavButton;
-		sidebarFrame.Navigate(selected.NavLink);
+
+		if (selected.Name == "collections")
+		{
+			var collectionsPage = new CollectionsSidebarPage();
+
+			collectionsPage.NewRequestOpened += CollectionsPage_NewRequestOpened;
+
+
+			sidebarFrame.Navigate(collectionsPage);
+		}
+
+		else
+		{
+			sidebarFrame.Navigate(selected.NavLink);
+		}
 
 	}
 
-	
+
+
+	private void CollectionsPage_NewRequestOpened(object? sender, RouteRunnerLibrary.Models.SavedRequest request)
+	{
+		if (IfTabAlreadyOpened(request, out int tabIndex))
+		{
+			mainFrame.Navigate(requestsList[tabIndex]);
+
+			//requestsTabControl.SelectedItem = requestsTabControl.Items[requestsTabControl.Items.Count - 1];
+
+			requestsTabControl.SelectedIndex = tabIndex;
+		}
+		else
+		{
+
+			AddNewRequestToTabView(request);
+		}
+	}
+	private bool IfTabAlreadyOpened(SavedRequest request, out int tabIndex)
+	{
+		for (int i = 0; i < requestsList.Count; i++)
+		{
+			if (request.Id == requestsList[i].GetCurrentRequestId())
+			{
+				tabIndex = i;
+				return true;
+			}
+		}
+		tabIndex = -1;
+		return false;
+
+	}
+	private void AddNewRequestToTabView(SavedRequest request)
+	{
+		TabItem newTabItem = new TabItem
+		{
+			Header = request.Name, // Text or content of the TabItem header
+			Content = null
+		};
+
+		DataTemplate tabHeaderTemplate = (DataTemplate)FindResource("TabHeaderTemplate");
+
+		ApplyExtendedTabItemStyle(newTabItem);
+		newTabItem.HeaderTemplate = tabHeaderTemplate;
+
+		requestsTabControl.Items.Add(newTabItem);
+
+		requestsList.Add(new RequestPage(requestsTabControl.Items.Count - 1, request));
+
+		requestsTabControl.SelectedItem = requestsTabControl.Items[requestsTabControl.Items.Count - 1];
+
+		requestsTabControl.SelectedIndex = requestsTabControl.Items.Count - 1;
+
+
+		mainFrame.Navigate(requestsList[requestsList.Count - 1]);
+	}
+
 
 	private void DynamicScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
 	{

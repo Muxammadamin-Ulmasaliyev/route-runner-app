@@ -72,7 +72,8 @@
                 <TreeView
                     Name="foldersTree"
                     AllowDrop="True"
-                    DisplayMemberPath="Name" />
+                    DisplayMemberPath="Name"
+                    MouseDoubleClick="foldersTree_MouseDoubleClick" />
 
 
             </Grid>

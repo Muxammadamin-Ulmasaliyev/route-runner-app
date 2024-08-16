@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\folderIcon.png" />
+    <None Remove="Images\requestIcon.png" />
+    <None Remove="Images\requestIcon.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FontAwesome5" Version="2.1.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
       <PrivateAssets>all</PrivateAssets>
@@ -30,6 +36,11 @@
 
   <ItemGroup>
     <Folder Include="UserControls\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\folderIcon.png" />
+    <Resource Include="Images\requestIcon.png" />
   </ItemGroup>
 
 </Project>

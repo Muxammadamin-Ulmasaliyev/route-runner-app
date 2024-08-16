@@ -7,9 +7,9 @@ public class SavedRequestService
 {
 	private readonly AppDbContext _appDbContext;
 
-	public SavedRequestService(AppDbContext _appDbContext)
+	public SavedRequestService(AppDbContext appDbContext)
 	{
-		_appDbContext = _appDbContext;
+		_appDbContext = appDbContext;
 	}
 	public SavedRequest CreateRequest(SavedRequest request)
 	{

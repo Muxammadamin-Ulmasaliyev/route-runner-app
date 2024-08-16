@@ -8,15 +8,11 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--<ui:ThemesDictionary Theme="Dark" />-->
                 <ui:ThemesDictionary Theme="Light" />
-
                 <ui:ControlsDictionary />
-                <ui:ThemesDictionary />
-
-                <!-- <ui:MenuLoader />
+                <!-- Uncomment when ready:
+                <ui:MenuLoader />
                 <ui:ContextMenuLoader />-->
-
             </ResourceDictionary.MergedDictionaries>
 
             <Color x:Key="SuccessColor">#FF439263</Color>
@@ -24,11 +20,6 @@
 
             <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}" />
             <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}" />
-
-
-
-
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>

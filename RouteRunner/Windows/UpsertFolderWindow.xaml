@@ -8,16 +8,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="UpsertFolderWindow"
-    KeyDown="Window_KeyDown"
     Width="500"
     Height="150"
+    KeyDown="Window_KeyDown"
+    ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
-    WindowStyle="None"
     mc:Ignorable="d">
     <Grid>
 
         <StackPanel
-            Margin="10,20,10,20"
+            Margin="5,10,5,10"
             VerticalAlignment="Center"
             Orientation="Vertical">
 
@@ -33,9 +33,8 @@
                 KeyDown="folderNameTextBox_KeyDown"
                 PlaceholderText="Folder name..." />
 
-
             <StackPanel
-                Margin="0,0,25,0"
+                Margin="0,5,25,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Orientation="Horizontal">

@@ -6,8 +6,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using FontAwesome5;
-using Wpf.Ui.Appearance;
+using RouteRunner.Windows;
+using RouteRunner.Helpers;
+using RouteRunnerLibrary.Services;
 
 namespace RouteRunner.Pages;
 
@@ -15,10 +16,47 @@ namespace RouteRunner.Pages;
 public partial class RequestPage : Page
 {
 	private readonly IApiHelper api = new ApiHelper();
-	public RequestPage()
+
+	private SavedRequest _currentRequest;
+	private int _currentTabIndex;
+
+	private SavedRequestService _requestService;
+	public int GetCurrentRequestId()
 	{
+		return _currentRequest.Id;
+	}
+	public RequestPage(int currentTabIndex, SavedRequest? currentRequest = null)
+	{
+
+		_requestService = new(new AppDbContext());
+
 		InitializeComponent();
 		PopulateHttpVerbsComboBox();
+
+		_currentTabIndex = currentTabIndex;
+		_currentRequest = currentRequest;
+
+		if (_currentRequest != null)
+		{
+			requestNameTextBox.Text = _currentRequest.Name;
+			urlTextBox.Text = _currentRequest.Url;
+			httpVerbsComboBox.SelectedItem = _currentRequest.HttpVerb;
+
+			saveRequestButton.IsEnabled = _currentRequest.Id == 0;
+
+		}
+
+
+		EventNotificationService.Instance.NewRequestCreatedEvent += NewRequestCreatedEvent;
+
+
+
+	}
+
+	private void NewRequestCreatedEvent(object? sender, SavedRequest request)
+	{
+		requestNameTextBox.Text = request.Name;
+		_currentRequest.Id = request.Id;
 
 	}
 
@@ -192,5 +230,70 @@ public partial class RequestPage : Page
 		Clipboard.SetText(responseBodyTextBox.Text);
 	}
 
-	
+	private void saveRequestButton_Click(object sender, RoutedEventArgs e)
+	{
+
+		_currentRequest.Name = requestNameTextBox.Text;
+		_currentRequest.HttpVerb = (HttpVerb)httpVerbsComboBox.SelectedItem;
+		_currentRequest.Url = urlTextBox.Text;
+
+		if (_currentRequest.Id == 0 || _currentRequest is null)
+		{
+			var saveRequestWindow = new SaveRequestWindow(_currentRequest);
+			saveRequestWindow.Owner = Application.Current.MainWindow;
+			Application.Current.MainWindow.Opacity = 0.4;
+			saveRequestWindow.ShowDialog();
+			Application.Current.MainWindow.Opacity = 1.0;
+		}
+		else
+		{
+			// update saved requst in DB
+
+			var updatedRequest = _requestService.UpdateRequest(_currentRequest);
+
+
+			EventNotificationService.Instance.ExistingRequestSaved(updatedRequest);
+
+			saveRequestButton.IsEnabled = false;
+
+
+		}
+
+
+	}
+
+	private void requestNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+	{
+
+		EventNotificationService.Instance.RequestNameChanged(_currentTabIndex, requestNameTextBox.Text);
+		saveRequestButton.IsEnabled = true;
+
+		//	(tabControl.SelectedItem as TabItem).Header = requestNameTextBox.Text;
+
+	}
+
+	private void requestNameTextBox_LostFocus(object sender, RoutedEventArgs e)
+	{
+		if (string.IsNullOrEmpty(requestNameTextBox.Text))
+		{
+			requestNameTextBox.Text = "Untitled request";
+			return;
+		}
+
+
+
+
+	}
+
+	private void httpVerbsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+	{
+		saveRequestButton.IsEnabled = true;
+	}
+
+	private void urlTextBox_TextChanged(object sender, TextChangedEventArgs e)
+	{
+		saveRequestButton.IsEnabled = true;
+
+	}
 }
+

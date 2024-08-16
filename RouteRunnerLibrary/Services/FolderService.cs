@@ -53,6 +53,7 @@ public class FolderService
 	public bool DeleteFolder(int id)
 	{
 		var folder = _appDbContext.Folders.Find(id);
+
 		if (folder == null)
 		{
 			return false;
@@ -68,6 +69,24 @@ public class FolderService
 
 		_appDbContext.SaveChanges();
 		return true;
+	}
+
+	public List<Folder> GetRootParentFolders()
+	{
+		return _appDbContext.Folders
+			.Include(f => f.SubFolders)
+			.Include(f => f.SavedRequests)
+			.Where(f => f.ParentId == null)
+			.ToList();
+	}
+
+	public List<Folder> GetSubFolders(int parentFolderId)
+	{
+		return _appDbContext.Folders
+			.Include(f => f.SubFolders)
+			.Include(f => f.SavedRequests)
+			.Where(f => f.ParentId == parentFolderId)
+			.ToList();	
 	}
 
 	// Request CRUD operations

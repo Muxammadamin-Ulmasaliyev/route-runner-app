@@ -10,7 +10,9 @@ namespace RouteRunner.Windows;
 public partial class UpsertFolderWindow : Window
 {
 	private readonly FolderService _folderService;
+	private readonly SavedRequestService _requestService;
 	public event EventHandler<Folder> NewFolderCreatedEvent;
+	public event EventHandler<SavedRequest> NewRequestCreatedEvent;
 
 	private int? parentFolderId = null;
 
@@ -19,6 +21,8 @@ public partial class UpsertFolderWindow : Window
 		this.parentFolderId = parentFolderId;
 		InitializeComponent();
 		_folderService = new(new AppDbContext());
+		_requestService = new(new AppDbContext());
+		folderNameTextBox.Focus();
 	}
 
 
