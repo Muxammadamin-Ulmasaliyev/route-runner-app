@@ -1,5 +1,5 @@
 # Route-Runner-App
-Route Runner offers an intuitive interface for making GET requests to APIs and displaying the responses in a formatted JSON view.
+Route Runner offers an intuitive interface for making REST requests to APIs and displaying the responses in a formatted JSON view.
 It's ideal for developers and testers, helping you efficiently validate and troubleshoot your API calls.
 
 ## Technologies used
@@ -11,7 +11,7 @@ It's ideal for developers and testers, helping you efficiently validate and trou
 
 ## Using The App
 1. Download the files from the release section.
-2. When application launches it should look like this :
+
    
 ![Postman Clone App ready to run](Images/screenshot1.png "Ready to run")
 
