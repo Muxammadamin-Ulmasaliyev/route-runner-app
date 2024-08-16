@@ -13,7 +13,7 @@ It's ideal for developers and testers, helping you efficiently validate and trou
 1. Download the files from the release section.
 
    
-![Postman Clone App ready to run](Images/screenshot main.png "Ready to run")
+![Postman Clone App ready to run](Images/screenshot%20main.png "Ready to run")
 
 4. Fill in your API URL and hit Go:
 
