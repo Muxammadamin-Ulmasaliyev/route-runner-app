@@ -136,9 +136,9 @@
                             VerticalAlignment="Center"
                             Background="{ui:ThemeResource ControlFillColorInputActiveBrush}"
                             FontSize="18"
-                            TextChanged="urlTextBox_TextChanged"
                             KeyDown="urlTextBox_KeyDown"
-                            PlaceholderText="Enter URL" />
+                            PlaceholderText="Enter URL"
+                            TextChanged="urlTextBox_TextChanged" />
                         <ui:Button
                             Name="goButton"
                             Grid.Column="2"

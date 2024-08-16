@@ -9,9 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="DB\route-runner-app.db" />
     <None Remove="Images\folderIcon.png" />
     <None Remove="Images\requestIcon.png" />
     <None Remove="Images\requestIcon.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="DB\route-runner-app.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
