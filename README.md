@@ -1,32 +1,56 @@
-# Route-Runner-App
-Route Runner offers an intuitive interface for making REST requests to APIs and displaying the responses in a formatted JSON view.
-It's ideal for developers and testers, helping you efficiently validate and troubleshoot your API calls.
+# Route Runner 🚀🌐
 
-## Technologies used
+**Route Runner** is a minimalistic platform for testing APIs (Application Programming Interfaces). It allows developers to test APIs . Use it to simplify the process of testing APIs by providing a user-friendly interface for making requests, viewing responses, and debugging issues.
 
-* C#
-* .NET 8
-* WPF
-* HttpClient
 
-## Using The App
-1. Download the files from the release section.
+## Features 
 
-   
-![Postman Clone App ready to run](Images/screenshot%20main.png "Ready to run")
+- **HTTP Methods:** Supports GET, POST, PUT, PATCH, DELETE, and HEAD requests.
+- **Request Management:** Save requests and organize them into folders.
+- **SQLite Storage:** Requests and folders are stored using SQLite for efficient data management.
 
-4. Fill in your API URL and hit Go:
 
-![Postman Clone App result](Images/screenshot2.png "Run Results")
+## Usage 
 
-## Upcoming changes
-* Implementing POST, PUT , PATCH and DELETE functionality
-* Adding API headers
-* Handling API Authentication
-* Adding Dependency injection
-* Adding Logging
-* Creating a section : "Saved API requests"
-* Adding history of requests
-* Adding environment files
-  
-  
+1. Launch the application.
+2. Create and manage your API requests with various HTTP methods.
+3. Save and organize your requests into folders.
+4. Use upcoming features such as API headers, authentication, request history, and environment files to enhance your API testing.
+
+## Technologies Used :too
+
+- **.NET 8**
+- **WPF**
+- **Lepoco WPF UI library**
+- **SQLite** for storing saved requests and folders
+
+## Screenshots 📷
+![RouteRunner v2.0](Images/screenshot%20main.png)
+
+## Upcoming Features 💡
+- Adding API headers
+- Handling API authentication
+- Request history tracking
+- Environment file management
+
+## Contribution 
+
+🚀 **Contributions are welcome!** If you have ideas for features or improvements, feel free to:
+
+- 🐛 Open an issue to report bugs or suggest features.
+- 🔧 Submit a pull request to help improve the project.
+
+We appreciate your contributions to make Route Runner even better! 🙌 
+
+
+## Contacts
+
+If you have any questions or want to get in touch, you can reach out through:
+
+- 📧 Email: [ulmasaliyev2005@gmail.com](mailto:ulmasaliyev2005@gmail.com)
+- 💼 LinkedIn: [Muxammadamin Ulmasaliyev](https://www.linkedin.com/in/muxammadamin-ulmasaliyev-419198251/)
+
+Feel free to reach out with any inquiries or feedback! 😊
+
+
+
