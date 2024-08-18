@@ -31,47 +31,36 @@ public partial class SaveRequestWindow : Window
 
 		InitializeComponent();
 
-
 		requestNameTextBox.Text = request.Name;
-
 
 		PopulateFoldersListView();
 
-
 		breadCrumbBar.Items.Add(new Folder() { Id = -1, Name = "Home" });
-
-
 
 	}
 
-
-
 	private void PopulateFoldersListView()
 	{
+		// Fetch folders once and store them
 		var folders = GetFolders();
-
 		foldersListView.Items.Clear();
+
+		// Reuse the BitmapImage instance for the icon
+		var folderIcon = new BitmapImage(new Uri("pack://application:,,,/Images/folderIcon.png"));
 
 		foreach (var folder in folders)
 		{
-			var listViewItem = CreateCustomStyledFolderListViewItem(folder);
+			var listViewItem = CreateCustomStyledFolderListViewItem(folder, folderIcon);
 			foldersListView.Items.Add(listViewItem);
 		}
 	}
 
-	private void AddNewFolderToListView(Folder newFolder)
+	private ListViewItem CreateCustomStyledFolderListViewItem(Folder folder, BitmapImage folderIcon)
 	{
-		var listViewItem = CreateCustomStyledFolderListViewItem(newFolder);
-		foldersListView.Items.Add(listViewItem);
-	}
-
-
-	private ListViewItem CreateCustomStyledFolderListViewItem(Folder folder)
-	{
-		StackPanel stack = new StackPanel { Orientation = Orientation.Horizontal };
+		// Reuse BitmapImage instance for each item
 		Image icon = new Image
 		{
-			Source = new BitmapImage(new Uri("pack://application:,,,/Images/folderIcon.png")),
+			Source = folderIcon,
 			Width = 18,
 			Height = 18,
 			Margin = new Thickness(0, 0, 5, 0)
@@ -84,23 +73,28 @@ public partial class SaveRequestWindow : Window
 			VerticalAlignment = VerticalAlignment.Center
 		};
 
+		// Use a horizontal StackPanel for layout
+		StackPanel stack = new StackPanel
+		{
+			Orientation = Orientation.Horizontal
+		};
 		stack.Children.Add(icon);
 		stack.Children.Add(text);
 
-
-		return new ListViewItem()
+		// Return a new ListViewItem
+		return new ListViewItem
 		{
 			Content = stack,
 			Tag = folder
 		};
 	}
 
-	private ListViewItem CreateCustomStyledRequestListViewItem(SavedRequest request)
+	private ListViewItem CreateCustomStyledRequestListViewItem(SavedRequest request, BitmapImage requestIcon)
 	{
 		StackPanel stack = new StackPanel { Orientation = Orientation.Horizontal };
 		Image icon = new Image
 		{
-			Source = new BitmapImage(new Uri("pack://application:,,,/Images/requestIcon.png")),
+			Source = requestIcon,
 			Width = 18,
 			Height = 18,
 			Margin = new Thickness(0, 0, 5, 0)
@@ -160,24 +154,27 @@ public partial class SaveRequestWindow : Window
 		breadCrumbBar.Items.Add(folder);
 	}
 
-	
+
 
 	private void PopulateFoldersListView(int parentFolderId)
 	{
 		var folders = GetSubFolders(parentFolderId);
 
+		var folderIcon = new BitmapImage(new Uri("pack://application:,,,/Images/folderIcon.png"));
+		var requestIcon = new BitmapImage(new Uri("pack://application:,,,/Images/requestIcon.png"));
+
 		foldersListView.Items.Clear();
 
 		foreach (var folder in folders)
 		{
-			var listViewItem = CreateCustomStyledFolderListViewItem(folder);
+			var listViewItem = CreateCustomStyledFolderListViewItem(folder, folderIcon);
 			foldersListView.Items.Add(listViewItem);
 		}
 
 		var requests = GetRequests(parentFolderId);
 		foreach (var request in requests)
 		{
-			var listViewItem = CreateCustomStyledRequestListViewItem(request);
+			var listViewItem = CreateCustomStyledRequestListViewItem(request, requestIcon);
 
 
 			foldersListView.Items.Add(listViewItem);
@@ -282,7 +279,7 @@ public partial class SaveRequestWindow : Window
 			System.Windows.MessageBox.Show("Please select a folder to save the request to.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK);
 			return;
 		}
-			
+
 
 		var parentFolder = breadCrumbBar.Items[breadCrumbBar.Items.Count - 1] as Folder;
 

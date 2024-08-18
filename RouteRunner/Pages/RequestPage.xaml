@@ -38,6 +38,7 @@
                 BorderBrush="{ui:ThemeResource LayerFillColorDefaultBrush}"
                 BorderThickness="0.5">
                 <Grid>
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="auto" />
@@ -46,6 +47,8 @@
                         Grid.Column="0"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
+
+
                         <ui:TextBox
                             Name="requestNameTextBox"
                             HorizontalAlignment="Stretch"
@@ -57,6 +60,7 @@
                             LostFocus="requestNameTextBox_LostFocus"
                             PlaceholderText=""
                             TextChanged="requestNameTextBox_TextChanged" />
+
                     </StackPanel>
 
                     <StackPanel
@@ -232,65 +236,74 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <StackPanel
-                            Name="responseBodyUpperPanel"
+                        <Border
                             Grid.Row="0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            Background="{ui:ThemeResource ControlFillColorDisabledBrush}"
-                            Orientation="Horizontal"
-                            Visibility="Collapsed">
-                            <ui:TextBlock
-                                Name="responseStatusCodeTextBlock"
-                                Width="Auto"
-                                Height="Auto"
-                                Margin="0,2,15,2"
-                                HorizontalAlignment="Right"
-                                FontTypography="BodyStrong"
-                                Text="Status: " />
-                            <ui:TextBlock
-                                Name="responseTimeTextBlock"
-                                Width="Auto"
-                                Height="Auto"
-                                Margin="0,2,15,2"
-                                HorizontalAlignment="Right"
-                                FontTypography="BodyStrong"
-                                Text="Time: " />
-                            <ui:TextBlock
-                                Name="responseSizeTextBlock"
-                                Width="Auto"
-                                Height="Auto"
-                                Margin="0,2,15,2"
-                                HorizontalAlignment="Right"
-                                FontTypography="BodyStrong"
-                                Text="Size: " />
-                            <ui:Button
-                                Name="copyResponseBody"
-                                Width="auto"
-                                Height="auto"
-                                Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
-                                Click="copyResponseBody_Click"
-                                CornerRadius="3"
-                                Cursor="Hand"
-                                ToolTip="Copy response">
-                                <Button.Content>
-                                    <fa5:FontAwesome Foreground="#646464" Icon="Solid_Copy" />
-                                </Button.Content>
-                            </ui:Button>
+                            BorderBrush="{ui:ThemeResource LayerFillColorDefaultBrush}"
+                            BorderThickness="0.5">
+                            <Grid>
+                                <StackPanel
+                                    Name="responseBodyUpperPanel"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal"
+                                    Visibility="Collapsed">
+                                    <ui:TextBlock
+                                        Name="responseStatusCodeTextBlock"
+                                        Width="Auto"
+                                        Height="Auto"
+                                        Margin="0,2,15,2"
+                                        HorizontalAlignment="Right"
+                                        FontTypography="BodyStrong"
+                                        Text="Status: " />
+                                    <ui:TextBlock
+                                        Name="responseTimeTextBlock"
+                                        Width="Auto"
+                                        Height="Auto"
+                                        Margin="0,2,15,2"
+                                        HorizontalAlignment="Right"
+                                        FontTypography="BodyStrong"
+                                        Text="Time: " />
+                                    <ui:TextBlock
+                                        Name="responseSizeTextBlock"
+                                        Width="Auto"
+                                        Height="Auto"
+                                        Margin="0,2,15,2"
+                                        HorizontalAlignment="Right"
+                                        FontTypography="BodyStrong"
+                                        Text="Size: " />
+                                    <ui:Button
+                                        Name="copyResponseBody"
+                                        Width="auto"
+                                        Height="auto"
+                                        Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
+                                        Click="copyResponseBody_Click"
+                                        CornerRadius="3"
+                                        Cursor="Hand"
+                                        ToolTip="Copy response">
+                                        <Button.Content>
+                                            <fa5:FontAwesome Foreground="#646464" Icon="Solid_Copy" />
+                                        </Button.Content>
+                                    </ui:Button>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
 
-                        </StackPanel>
-
-
-                        <ui:TextBox
-                            Name="responseBodyTextBox"
+                        <ui:DynamicScrollViewer
                             Grid.Row="1"
-                            AcceptsReturn="True"
-                            FontFamily="Consolas"
-                            FontSize="14"
+                            Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}"
                             HorizontalScrollBarVisibility="Auto"
-                            IsReadOnly="True"
-                            TextWrapping="Wrap"
-                            VerticalScrollBarVisibility="Auto" />
+                            VerticalScrollBarVisibility="Auto">
+
+                            <ui:TextBox
+                                Name="responseBodyTextBox"
+                                AcceptsReturn="True"
+                                FontFamily="Consolas"
+                                FontSize="14"
+                                IsReadOnly="True"
+                                TextWrapping="Wrap" />
+
+                        </ui:DynamicScrollViewer>
+
                         <ui:TextBlock
                             Name="responseTextBlock"
                             Grid.Row="1"

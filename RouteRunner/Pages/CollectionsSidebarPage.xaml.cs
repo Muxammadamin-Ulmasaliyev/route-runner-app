@@ -104,10 +104,8 @@ public partial class CollectionsSidebarPage : Page
 
 		foreach (var folder in folders)
 		{
-
 			// Create TreeViewItem for each folder
 			var newFolder = GenerateCustomFolderTreeViewItem(folder, folderContextMenu);
-
 
 
 			// Add requests to the folder

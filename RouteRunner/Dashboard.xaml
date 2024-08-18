@@ -84,7 +84,7 @@
                 HorizontalAlignment="Left"
                 FontTypography="TitleLarge"
                 Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
-                Text="Route Runner" />
+                Text="Route Runner v1.1 beta" />
 
         </Grid>
         <Grid Grid.Row="1">
