@@ -21,8 +21,8 @@ public partial class SaveRequestWindow : Window
 	private SavedRequest _currentRequest;
 	private readonly FolderService _folderService;
 	private readonly SavedRequestService _requestService;
-
-	public SaveRequestWindow(SavedRequest request)
+	private int _tabIndexOfRequest;
+	public SaveRequestWindow(SavedRequest request, int tabIndexOfRequest)
 	{
 
 		_folderService = new FolderService(new AppDbContext());
@@ -30,7 +30,7 @@ public partial class SaveRequestWindow : Window
 		_currentRequest = request;
 
 		InitializeComponent();
-
+		_tabIndexOfRequest = tabIndexOfRequest;
 		requestNameTextBox.Text = request.Name;
 
 		PopulateFoldersListView();
@@ -292,7 +292,7 @@ public partial class SaveRequestWindow : Window
 		});
 
 
-		EventNotificationService.Instance.NewRequestCreated(createdRequest);
+		EventNotificationService.Instance.NewRequestCreated(createdRequest, _tabIndexOfRequest);
 
 
 		this.Close();

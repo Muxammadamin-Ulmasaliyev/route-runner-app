@@ -25,6 +25,7 @@ public class FolderService
 	public Folder GetFolderById(int id)
 	{
 		return _appDbContext.Folders
+			.Include(f => f.Parent)
 			.Include(f => f.SubFolders)
 			.Include(f => f.SavedRequests)
 			.FirstOrDefault(f => f.Id == id);
@@ -86,7 +87,27 @@ public class FolderService
 			.Include(f => f.SubFolders)
 			.Include(f => f.SavedRequests)
 			.Where(f => f.ParentId == parentFolderId)
-			.ToList();	
+			.ToList();
+	}
+
+	public List<string> GetHierarchyOfFolder(int folderId)
+	{
+		var hierarchy = new List<string>();
+
+		var folder = GetFolderById(folderId);
+
+		while (folder is not null)
+		{
+			hierarchy.Add(folder.Name);
+			if (folder.ParentId == null)
+			{
+				break;
+			}
+			folder = GetFolderById((int)folder.ParentId);
+		}
+		hierarchy.Reverse();
+
+		return hierarchy;
 	}
 
 	// Request CRUD operations

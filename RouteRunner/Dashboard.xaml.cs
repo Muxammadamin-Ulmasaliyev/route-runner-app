@@ -8,6 +8,8 @@ using RouteRunner.CustomControls;
 using RouteRunnerLibrary.Models;
 using RouteRunnerLibrary;
 using RouteRunner.Helpers;
+using MessageBox = System.Windows.MessageBox;
+using RouteRunnerLibrary.Services;
 
 namespace RouteRunner;
 
@@ -15,12 +17,12 @@ public partial class MainWindow : Window
 {
 
 	private List<RequestPage> requestsList;
-
+	private readonly FolderService _folderService;
 	private bool shiftKeyPressed = false, ctrlKeyPressed = false;
 	public MainWindow()
 	{
 		InitializeComponent();
-
+		_folderService = new(new AppDbContext());
 		requestsList = new();
 
 		EventNotificationService.Instance.RequestNameChangedInTextBoxEvent += RequestNameChangedInTextBoxEvent; ;
@@ -39,7 +41,7 @@ public partial class MainWindow : Window
 		}
 	}
 
-	
+
 
 	private void Window_KeyDown(object sender, KeyEventArgs e)
 	{
@@ -235,20 +237,21 @@ public partial class MainWindow : Window
 	}
 
 
-
+	
 	private void CollectionsPage_NewRequestOpened(object? sender, RouteRunnerLibrary.Models.SavedRequest request)
 	{
+
+		//GetAncestorsOfRequest(request);
+
 		if (IfTabAlreadyOpened(request, out int tabIndex))
 		{
-			mainFrame.Navigate(requestsList[tabIndex]);
 
-			//requestsTabControl.SelectedItem = requestsTabControl.Items[requestsTabControl.Items.Count - 1];
+			mainFrame.Navigate(requestsList[tabIndex]);
 
 			requestsTabControl.SelectedIndex = tabIndex;
 		}
 		else
 		{
-
 			AddNewRequestToTabView(request);
 		}
 	}

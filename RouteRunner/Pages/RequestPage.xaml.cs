@@ -20,20 +20,24 @@ public partial class RequestPage : Page
 	private SavedRequest _currentRequest;
 	private int _currentTabIndex;
 
-	private SavedRequestService _requestService;
+	private readonly SavedRequestService _requestService;
+	private readonly FolderService _folderService;
 	public int GetCurrentRequestId()
 	{
 		return _currentRequest.Id;
 	}
+
 	public RequestPage(int currentTabIndex, SavedRequest? currentRequest = null)
 	{
 
 		_requestService = new(new AppDbContext());
+		_folderService = new(new AppDbContext());
 
 		InitializeComponent();
 		PopulateHttpVerbsComboBox();
 
 		_currentTabIndex = currentTabIndex;
+
 		_currentRequest = currentRequest;
 
 		if (_currentRequest != null)
@@ -41,11 +45,10 @@ public partial class RequestPage : Page
 			requestNameTextBox.Text = _currentRequest.Name;
 			urlTextBox.Text = _currentRequest.Url;
 			httpVerbsComboBox.SelectedItem = _currentRequest.HttpVerb;
-
 			saveRequestButton.IsEnabled = _currentRequest.Id == 0;
-
 		}
 
+		PopulateHierarchyOfRequest();
 
 		EventNotificationService.Instance.NewRequestCreatedEvent += NewRequestCreatedEvent;
 
@@ -53,10 +56,34 @@ public partial class RequestPage : Page
 
 	}
 
-	private void NewRequestCreatedEvent(object? sender, SavedRequest request)
+	private void PopulateHierarchyOfRequest()
 	{
-		requestNameTextBox.Text = request.Name;
-		_currentRequest.Id = request.Id;
+
+		if (_currentRequest.Id != 0)
+		{
+			var folderId = _currentRequest.FolderId;
+
+			var hierarchy = _folderService.GetHierarchyOfFolder((int)folderId);
+
+			hierarchyTextBlock.Text = string.Join(" / ", hierarchy);
+			hierarchyTextBlock.Text += " / ";
+		}
+
+
+
+	}
+
+	private void NewRequestCreatedEvent(object? sender, (int tabIndex, SavedRequest request) data)
+	{
+		if (_currentTabIndex == data.tabIndex)
+		{
+
+			_currentRequest.Id = data.request.Id;
+			_currentRequest.FolderId = data.request.FolderId;
+			requestNameTextBox.Text = data.request.Name;
+
+			PopulateHierarchyOfRequest();
+		}
 
 	}
 
@@ -239,7 +266,8 @@ public partial class RequestPage : Page
 
 		if (_currentRequest.Id == 0 || _currentRequest is null)
 		{
-			var saveRequestWindow = new SaveRequestWindow(_currentRequest);
+
+			var saveRequestWindow = new SaveRequestWindow(_currentRequest, _currentTabIndex);
 			saveRequestWindow.Owner = Application.Current.MainWindow;
 			Application.Current.MainWindow.Opacity = 0.4;
 			saveRequestWindow.ShowDialog();
@@ -251,12 +279,8 @@ public partial class RequestPage : Page
 
 			var updatedRequest = _requestService.UpdateRequest(_currentRequest);
 
-
 			EventNotificationService.Instance.ExistingRequestSaved(updatedRequest);
-
 			saveRequestButton.IsEnabled = false;
-
-
 		}
 
 
@@ -295,5 +319,7 @@ public partial class RequestPage : Page
 		saveRequestButton.IsEnabled = true;
 
 	}
+
+
 }
 

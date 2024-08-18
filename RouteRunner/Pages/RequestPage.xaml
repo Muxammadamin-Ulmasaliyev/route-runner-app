@@ -49,6 +49,15 @@
                         Orientation="Horizontal">
 
 
+                        <ui:TextBlock
+                            Name="hierarchyTextBlock"
+                            Width="Auto"
+                            Margin="0,0,2,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontTypography="BodyStrong"
+                            Opacity="0.75"
+                            Text="" />
                         <ui:TextBox
                             Name="requestNameTextBox"
                             HorizontalAlignment="Stretch"

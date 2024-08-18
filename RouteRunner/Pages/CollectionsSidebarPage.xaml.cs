@@ -19,6 +19,7 @@ public partial class CollectionsSidebarPage : Page
 {
 	private readonly FolderService _folderService;
 	private readonly SavedRequestService _requestService;
+
 	public event EventHandler<SavedRequest> NewRequestOpened;
 
 	public CollectionsSidebarPage()
@@ -65,9 +66,9 @@ public partial class CollectionsSidebarPage : Page
 		}
 	}
 
-	private void NewRequestCreatedEventHandler(object? sender, SavedRequest newRequest)
+	private void NewRequestCreatedEventHandler(object? sender, (int tabIndex , SavedRequest newRequest) data)
 	{
-		AddNewRequestToTree(newRequest);
+		AddNewRequestToTree(data.newRequest);
 	}
 
 	private async void PopulateFoldersTreeAsync()
@@ -123,7 +124,7 @@ public partial class CollectionsSidebarPage : Page
 			// Store the item in the dictionary
 			folderItems[folder.Id] = newFolder;
 
-			// If the folder has no parent, it's a root folder
+			// If the folder has no parent, it'` a root folder
 			if (folder.ParentId == null)
 			{
 				rootItems.Add(newFolder);
@@ -179,7 +180,8 @@ public partial class CollectionsSidebarPage : Page
 		{
 			Header = stack,
 			Name = $"folder{folder.Id}",
-			ContextMenu = folderContextMenu
+			ContextMenu = folderContextMenu,
+			Tag = folder
 		};
 	}
 
@@ -209,7 +211,8 @@ public partial class CollectionsSidebarPage : Page
 		{
 			Header = stack,
 			Name = $"request{request.Id}",
-			ContextMenu = requestContextMenu
+			ContextMenu = requestContextMenu,
+			Tag = request
 		};
 	}
 
@@ -269,7 +272,9 @@ public partial class CollectionsSidebarPage : Page
 
 			var existingParentFolder = requestTreeViewItemToRemove.Parent as TreeViewItem;
 
-			var result = MessageBox.Show("Are you sure to delete request : " + ((requestTreeViewItemToRemove.Header as StackPanel).Children[1] as TextBlock).Text + " ?", "Warning"
+			var requestToDelete = requestTreeViewItemToRemove.Tag as SavedRequest;
+
+			var result = MessageBox.Show("Are you sure to delete request : " + requestToDelete.Name + " ?", "Warning"
 				, MessageBoxButton.YesNo
 				, MessageBoxImage.Warning
 				, System.Windows.MessageBoxResult.No);
@@ -280,8 +285,7 @@ public partial class CollectionsSidebarPage : Page
 
 				if (existingParentFolder != null)
 				{
-
-					var deleteResult = _requestService.DeleteRequest(int.Parse(requestTreeViewItemToRemove.Name.Remove(0, 7)));
+					var deleteResult = _requestService.DeleteRequest(requestToDelete.Id);
 					if (deleteResult is false)
 					{
 						MessageBox.Show("Error  in  deletion.");
@@ -299,7 +303,6 @@ public partial class CollectionsSidebarPage : Page
 		}
 	}
 
-	
 
 	private void Request_Open_Click(object sender, RoutedEventArgs e)
 	{
@@ -309,9 +312,9 @@ public partial class CollectionsSidebarPage : Page
 
 		var treeViewItem = contextMenu.PlacementTarget as TreeViewItem;
 
-		if (treeViewItem.Name.StartsWith("request"))
+		if (treeViewItem.Tag is SavedRequest request)
 		{
-			var request = _requestService.GetRequestById(int.Parse(treeViewItem.Name.Remove(0, 7)));
+			//var request = _requestService.GetRequestById(int.Parse(treeViewItem.Name.Remove(0, 7)));
 			NewRequestOpened?.Invoke(this, request);
 		}
 
@@ -323,14 +326,14 @@ public partial class CollectionsSidebarPage : Page
 		var contextMenuItem = sender as MenuItem;
 		var contextMenu = contextMenuItem.Parent as ContextMenu;
 
-		if (contextMenu != null)
+		if (contextMenu is not null)
 		{
 			// Get the TreeViewItem from the ContextMenu
 
 			var treeViewItem = contextMenu.PlacementTarget as TreeViewItem;
 
-
-			var result = MessageBox.Show("Are you sure to delete folder : " + ((treeViewItem.Header as StackPanel).Children[1] as TextBlock).Text + " ?", "Warning"
+			// "Are you sure to delete folder : " + ((treeViewItem.Header as StackPanel).Children[1] as TextBlock).Text + " ?", "Warning"
+			var result = MessageBox.Show("Are you sure to delete folder : " + (treeViewItem.Tag as Folder).Name + " ?", "Warning"
 				, MessageBoxButton.YesNo
 				, MessageBoxImage.Warning
 				, MessageBoxResult.No);
@@ -344,16 +347,18 @@ public partial class CollectionsSidebarPage : Page
 
 				var parentFolder = folderToDelete.Parent as TreeViewItem;
 
-				if (parentFolder != null)
-				{
-					parentFolder.Items.Remove(folderToDelete);
-				}
-				else
+				if (parentFolder is null)
 				{
 					foldersTree.Items.Remove(folderToDelete);
 				}
+				else
+				{
+					parentFolder.Items.Remove(folderToDelete);
+				}
 
-				var folderIdToDelete = int.Parse(treeViewItem.Name.Remove(0, 6));
+				//var folderIdToDelete = int.Parse(treeViewItem.Name.Remove(0, 6));
+				var folderIdToDelete = (treeViewItem.Tag as Folder).Id;
+
 				DeleteFolder(folderIdToDelete);
 			}
 
@@ -378,7 +383,8 @@ public partial class CollectionsSidebarPage : Page
 
 			var treeViewItem = contextMenu.PlacementTarget as TreeViewItem;
 			// Get the folderId from the TreeViewItem
-			var parentFolderId = int.Parse(treeViewItem.Name.Remove(0, 6));
+			//var parentFolderId = int.Parse(treeViewItem.Name.Remove(0, 6));
+			var parentFolderId = (treeViewItem.Tag as Folder).Id;
 
 			var createdNewRequest = CreateNewRequest(parentFolderId);
 
@@ -422,12 +428,12 @@ public partial class CollectionsSidebarPage : Page
 
 		if (contextMenu != null)
 		{
-			// Get the TreeViewItem from the ContextMenu
-			//var treeViewItem = GetVisualParent<TreeViewItem>(contextMenu.PlacementTarget);
 
 			var treeViewItem = contextMenu.PlacementTarget as TreeViewItem;
+
 			// Get the folderId from the TreeViewItem
-			var parentFolderId = int.Parse(treeViewItem.Name.Remove(0, 6));
+			//var parentFolderId = int.Parse(treeViewItem.Name.Remove(0, 6));
+			var parentFolderId = (treeViewItem.Tag as Folder).Id;
 
 			var upsertFolderWindow = new UpsertFolderWindow(parentFolderId);
 
@@ -529,16 +535,14 @@ public partial class CollectionsSidebarPage : Page
 
 
 
-	private void Page_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-	{
-
-	}
+	
 
 	private void foldersTree_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
 	{
 		var clickedItem = e.OriginalSource as DependencyObject;
 
 		// Traverse up the visual tree to find the TreeViewItem
+
 		while (clickedItem != null && !(clickedItem is TreeViewItem))
 		{
 			clickedItem = VisualTreeHelper.GetParent(clickedItem);
@@ -547,12 +551,9 @@ public partial class CollectionsSidebarPage : Page
 		var treeViewItem = clickedItem as TreeViewItem;
 		//var treeViewItem = sender as TreeViewItem;
 
-		if (treeViewItem.Name.StartsWith("request"))
+		if (treeViewItem.Tag is SavedRequest request)
 		{
-
-			var request = _requestService.GetRequestById(int.Parse(treeViewItem.Name.Remove(0, 7)));
-
-
+			//var request = _requestService.GetRequestById(int.Parse(treeViewItem.Name.Remove(0, 7)));
 			NewRequestOpened?.Invoke(this, request);
 		}
 

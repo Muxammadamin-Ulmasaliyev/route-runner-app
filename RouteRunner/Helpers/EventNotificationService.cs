@@ -8,7 +8,7 @@ public class EventNotificationService
 	private static EventNotificationService _instance;
 
 	// Event to notify subscribers
-	public event EventHandler<SavedRequest> NewRequestCreatedEvent;
+	public event EventHandler<(int, SavedRequest)> NewRequestCreatedEvent;
 	public event EventHandler<(int, string)> RequestNameChangedInTextBoxEvent;
 	public event EventHandler<SavedRequest> ExistingRequestSavedEvent;
 
@@ -31,9 +31,9 @@ public class EventNotificationService
 
 	// Method to trigger the event
 
-	public void NewRequestCreated(SavedRequest createdRequest)
+	public void NewRequestCreated(SavedRequest createdRequest, int tabIndex)
 	{
-		NewRequestCreatedEvent?.Invoke(this, createdRequest);
+		NewRequestCreatedEvent?.Invoke(this, (tabIndex,createdRequest));
 	}
 
 

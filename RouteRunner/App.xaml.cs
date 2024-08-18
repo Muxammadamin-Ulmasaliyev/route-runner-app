@@ -28,7 +28,7 @@ namespace RouteRunner
 
 		}
 		private void GlobalExceptionHandler(object sender, UnhandledExceptionEventArgs e)
-		{
+			{
 			Exception exception = (Exception)e.ExceptionObject;
 
 			// Show error message in a MessageBox
