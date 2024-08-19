@@ -10,6 +10,7 @@ using RouteRunnerLibrary;
 using RouteRunner.Helpers;
 using MessageBox = System.Windows.MessageBox;
 using RouteRunnerLibrary.Services;
+using System.Configuration;
 
 namespace RouteRunner;
 
@@ -217,7 +218,7 @@ public partial class MainWindow : Window
 
 	private void sidebar_SelectionChanged(object sender, SelectionChangedEventArgs e)
 	{
-		var selected = sidebar.SelectedItem as NavButton;
+		/*var selected = sidebar.SelectedItem as NavButton;
 
 		if (selected.Name == "collections")
 		{
@@ -232,12 +233,12 @@ public partial class MainWindow : Window
 		else
 		{
 			sidebarFrame.Navigate(selected.NavLink);
-		}
+		}*/
 
 	}
 
 
-	
+
 	private void CollectionsPage_NewRequestOpened(object? sender, RouteRunnerLibrary.Models.SavedRequest request)
 	{
 
@@ -294,6 +295,52 @@ public partial class MainWindow : Window
 		mainFrame.Navigate(requestsList[requestsList.Count - 1]);
 	}
 
+	private void sidebarNavigationView_SelectionChanged(NavigationView sender, RoutedEventArgs args)
+	{
+		/*var selectedItem = sender.SelectedItem as NavigationViewItem;
+		if (selectedItem != null)
+		{
+			string selectedContent = selectedItem.Content.ToString();
+
+			switch (selectedContent)
+			{
+				case "Collections":
+					var collectionsPage = new CollectionsSidebarPage();
+					collectionsPage.NewRequestOpened += CollectionsPage_NewRequestOpened;
+					sidebarFrame.Navigate(collectionsPage);
+					break;
+				case "Environments":
+					sidebarFrame.Navigate(new EnvironmentsSidebarPage());
+					break;
+				case "History":
+					sidebarFrame.Navigate(new HistorySidebarPage());
+					break;
+			}
+		}*/
+		var selectedItem = sender.SelectedItem as NavigationViewItem;
+
+		if (selectedItem != null)
+		{
+			Type selectedPageType = selectedItem.TargetPageType;
+
+			if (selectedPageType == typeof(CollectionsSidebarPage))
+			{
+				var collectionsPage = new CollectionsSidebarPage();
+				collectionsPage.NewRequestOpened += CollectionsPage_NewRequestOpened;
+				sender.ReplaceContent(collectionsPage);
+
+			}
+			else if (selectedPageType == typeof(EnvironmentsSidebarPage))
+			{
+
+			}
+			else if (selectedPageType == typeof(HistorySidebarPage))
+			{
+			}
+		}
+
+
+	}
 
 	private void DynamicScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
 	{

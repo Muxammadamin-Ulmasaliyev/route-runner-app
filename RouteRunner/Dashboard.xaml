@@ -7,6 +7,7 @@
     xmlns:fa5="http://schemas.fontawesome.com/icons/"
     xmlns:local="clr-namespace:RouteRunner"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:RouteRunner.Pages"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="RouteRunner v2.0"
     Width="800"
@@ -29,7 +30,7 @@
             <Setter Property="Cursor" Value="Hand" />
         </Style>
         <Style x:Key="LargeSymbolIconStyle" TargetType="ui:SymbolIcon">
-            <Setter Property="FontSize" Value="28" />
+            <Setter Property="FontSize" Value="42" />
         </Style>
         <DataTemplate x:Key="TabHeaderTemplate">
             <Grid>
@@ -90,7 +91,6 @@
         <Grid Grid.Row="1">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" MaxWidth="75" />
                 <ColumnDefinition Width="auto" MaxWidth="450" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="1*" />
@@ -101,6 +101,7 @@
 
                 <Grid Grid.Column="0" Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}">
 
+                    <!--
                     <ListBox
                         x:Name="sidebar"
                         Margin="0,75,0,0"
@@ -130,17 +131,53 @@
                             ToolTip="History" />
 
                     </ListBox>
+                    -->
+
+                    <ui:NavigationView
+                        x:Name="sidebarNavigationView"
+                        Width="auto"
+                        AlwaysShowHeader="False"
+                        HeaderVisibility="Collapsed"
+                        IsPaneToggleVisible="False"
+                        PaneDisplayMode="LeftFluent"
+                        SelectionChanged="sidebarNavigationView_SelectionChanged">
+                        <ui:NavigationView.MenuItems>
+                            <ui:NavigationViewItem Name="collectionsNavItem" TargetPageType="{x:Type pages:CollectionsSidebarPage}">
+                                <ui:NavigationViewItem.Icon>
+                                    <ui:SymbolIcon Symbol="Folder48" />
+                                </ui:NavigationViewItem.Icon>
+                            </ui:NavigationViewItem>
+                            <ui:NavigationViewItem Name="environmentsNavItem" TargetPageType="{x:Type pages:EnvironmentsSidebarPage}">
+                                <ui:NavigationViewItem.Icon>
+                                    <ui:SymbolIcon Symbol="AppsListDetail24" />
+                                </ui:NavigationViewItem.Icon>
+                            </ui:NavigationViewItem>
+                            <ui:NavigationViewItem Name="historyNavItem" TargetPageType="{x:Type pages:HistorySidebarPage}">
+                                <ui:NavigationViewItem.Icon>
+                                    <ui:SymbolIcon Symbol="History48" />
+                                </ui:NavigationViewItem.Icon>
+                            </ui:NavigationViewItem>
+                        </ui:NavigationView.MenuItems>
+
+                        <ui:NavigationView.FooterMenuItems>
+                            <ui:NavigationViewItem Content="Settings">
+                                <ui:NavigationViewItem.Icon>
+                                    <ui:SymbolIcon Symbol="Settings24" />
+                                </ui:NavigationViewItem.Icon>
+                            </ui:NavigationViewItem>
+                        </ui:NavigationView.FooterMenuItems>
+                    </ui:NavigationView>
                 </Grid>
             </Border>
-
+            <!--
             <Grid Grid.Column="1" Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}">
                 <Frame
                     x:Name="sidebarFrame"
                     Margin="0,0,0,0"
                     NavigationUIVisibility="Hidden" />
-            </Grid>
+            </Grid>-->
             <GridSplitter
-                Grid.Column="2"
+                Grid.Column="1"
                 Width="4"
                 Margin="0,1,0,1"
                 HorizontalAlignment="Stretch"
@@ -150,7 +187,7 @@
                 ResizeDirection="Columns"
                 Style="{StaticResource GridSplitterStyle}" />
 
-            <Grid Grid.Column="3">
+            <Grid Grid.Column="2">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
@@ -203,7 +240,7 @@
             </Grid>
 
             <Border
-                Grid.Column="4"
+                Grid.Column="3"
                 BorderBrush="{ui:ThemeResource ControlStrongFillColorDisabledBrush}"
                 BorderThickness="0.5">
                 <Grid Grid.Column="4" />
