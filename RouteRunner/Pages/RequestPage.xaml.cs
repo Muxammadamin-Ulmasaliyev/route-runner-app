@@ -26,7 +26,10 @@ public partial class RequestPage : Page
 	{
 		return _currentRequest.Id;
 	}
-
+	public string GetCurrentRequestName()
+	{
+		return _currentRequest.Name;
+	}
 	public RequestPage(int currentTabIndex, SavedRequest? currentRequest = null)
 	{
 

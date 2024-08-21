@@ -142,17 +142,26 @@
                         PaneDisplayMode="LeftFluent"
                         SelectionChanged="sidebarNavigationView_SelectionChanged">
                         <ui:NavigationView.MenuItems>
-                            <ui:NavigationViewItem Name="collectionsNavItem" TargetPageType="{x:Type pages:CollectionsSidebarPage}">
+                            <ui:NavigationViewItem
+                                Name="collectionsNavItem"
+                                Content="Collections"
+                                TargetPageType="{x:Type pages:CollectionsSidebarPage}">
                                 <ui:NavigationViewItem.Icon>
                                     <ui:SymbolIcon Symbol="Folder48" />
                                 </ui:NavigationViewItem.Icon>
                             </ui:NavigationViewItem>
-                            <ui:NavigationViewItem Name="environmentsNavItem" TargetPageType="{x:Type pages:EnvironmentsSidebarPage}">
+                            <ui:NavigationViewItem
+                                Name="environmentsNavItem"
+                                Content="Environments"
+                                TargetPageType="{x:Type pages:EnvironmentsSidebarPage}">
                                 <ui:NavigationViewItem.Icon>
                                     <ui:SymbolIcon Symbol="AppsListDetail24" />
                                 </ui:NavigationViewItem.Icon>
                             </ui:NavigationViewItem>
-                            <ui:NavigationViewItem Name="historyNavItem" TargetPageType="{x:Type pages:HistorySidebarPage}">
+                            <ui:NavigationViewItem
+                                Name="historyNavItem"
+                                Content="History"
+                                TargetPageType="{x:Type pages:HistorySidebarPage}">
                                 <ui:NavigationViewItem.Icon>
                                     <ui:SymbolIcon Symbol="History48" />
                                 </ui:NavigationViewItem.Icon>
@@ -194,43 +203,75 @@
                     <RowDefinition Height="100*" />
                 </Grid.RowDefinitions>
 
-                <Border
-                    Grid.Row="0"
-                    Padding="0,2,0,0"
-                    BorderBrush="{ui:ThemeResource ControlStrongFillColorDisabledBrush}"
-                    BorderThickness="0.5">
 
-                    <ui:DynamicScrollViewer
-                        HorizontalScrollBarVisibility="Auto"
-                        PreviewMouseWheel="DynamicScrollViewer_PreviewMouseWheel"
-                        VerticalScrollBarVisibility="Auto">
-                        <StackPanel Orientation="Horizontal">
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Border
+                        Grid.Column="0"
+                        Padding="0,2,0,0"
+                        BorderBrush="{ui:ThemeResource ControlStrongFillColorDisabledBrush}"
+                        BorderThickness="0.5">
+                        <Grid>
+                            <ui:DynamicScrollViewer
+                                HorizontalScrollBarVisibility="Auto"
+                                PreviewMouseWheel="DynamicScrollViewer_PreviewMouseWheel"
+                                VerticalScrollBarVisibility="Auto">
+                                <StackPanel Orientation="Horizontal">
 
 
-                            <TabControl
-                                Name="requestsTabControl"
-                                Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}"
-                                Loaded="requestsTabControl_Loaded"
-                                SelectionChanged="requestsTabControl_SelectionChanged" />
+                                    <TabControl
+                                        Name="requestsTabControl"
+                                        Margin="0,0,0,5"
+                                        Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}"
+                                        Loaded="requestsTabControl_Loaded"
+                                        SelectionChanged="requestsTabControl_SelectionChanged" />
 
-                            <ui:Button
-                                Name="addNewRequestButton"
-                                Width="40"
-                                Height="40"
-                                Appearance="Secondary"
-                                Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
-                                Click="addNewRequestButton_Click"
-                                CornerRadius="3"
-                                Cursor="Hand"
-                                ToolTip="Add new request">
-                                <fa5:FontAwesome
-                                    FontSize="16"
-                                    Foreground="#646464"
-                                    Icon="Solid_Plus" />
-                            </ui:Button>
-                        </StackPanel>
-                    </ui:DynamicScrollViewer>
-                </Border>
+
+                                </StackPanel>
+                            </ui:DynamicScrollViewer>
+                        </Grid>
+                    </Border>
+                    <Border
+                        Grid.Column="1"
+                        Padding="0,2,0,0"
+                        BorderBrush="{ui:ThemeResource ControlStrongFillColorDisabledBrush}"
+                        BorderThickness="0.5">
+                        <Grid>
+                            <StackPanel Margin="5" Orientation="Horizontal">
+                                <ui:Button
+                                    Name="addNewRequestButton"
+                                    Width="40"
+                                    Height="36"
+                                    Margin="2,0,2,0"
+                                    Appearance="Secondary"
+                                    Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
+                                    Click="addNewRequestButton_Click"
+                                    CornerRadius="3"
+                                    Cursor="Hand"
+                                    ToolTip="Add new request">
+                                    <fa5:FontAwesome
+                                        FontSize="16"
+                                        Foreground="#646464"
+                                        Icon="Solid_Plus" />
+                                </ui:Button>
+                                <ComboBox
+                                    Name="requestsComboBox"
+                                    Height="40"
+                                    MinWidth="125"
+                                    MaxWidth="125"
+                                    Margin="2,0,2,0"
+                                    VerticalAlignment="Center"
+                                    Background="{ui:ThemeResource ControlFillColorInputActiveBrush}"
+                                    DisplayMemberPath="Header"
+                                    FontWeight="Bold"
+                                    SelectionChanged="requestsComboBox_SelectionChanged" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
                 <Frame
                     x:Name="mainFrame"
                     Grid.Row="1"
