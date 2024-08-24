@@ -18,10 +18,8 @@ public class ApiHelper : IApiHelper
 	{
 
 		var bodyStringContent = new StringContent(bodyContent, Encoding.UTF8, "application/json");
-
-		HttpResponseMessage httpResponseMessage;
-
 		var stopwatch = Stopwatch.StartNew();
+		HttpResponseMessage httpResponseMessage;
 
 		switch (action)
 		{
@@ -33,6 +31,27 @@ public class ApiHelper : IApiHelper
 			case HttpVerb.POST:
 				{
 					httpResponseMessage = await client.PostAsync(url, bodyStringContent);
+					break;
+				}
+			case HttpVerb.PUT:
+				{
+					httpResponseMessage = await client.PutAsync(url, bodyStringContent);
+					break;
+				}
+			case HttpVerb.PATCH:
+				{
+					httpResponseMessage = await client.PatchAsync(url, bodyStringContent);
+					break;
+				}
+			case HttpVerb.DELETE:
+				{
+					httpResponseMessage = await client.DeleteAsync(url);
+
+					break;
+				}
+			case HttpVerb.HEAD:
+				{
+					httpResponseMessage = await client.SendAsync(new HttpRequestMessage(HttpMethod.Head, url));
 					break;
 				}
 			default:
@@ -137,11 +156,10 @@ public class ApiHelper : IApiHelper
 			return false;
 		}
 
-		bool output = Uri.TryCreate(url, UriKind.Absolute, out Uri uriOutput) &&
-					  (uriOutput.Scheme == Uri.UriSchemeHttps);
+		/*bool output = Uri.TryCreate(url, UriKind.Absolute, out Uri uriOutput) && (uriOutput.Scheme == Uri.UriSchemeHttps);*/
 
+		bool isValid = Uri.TryCreate(url, UriKind.Absolute, out Uri uriOutput);
 
-
-		return output;
+		return isValid;
 	}
 }
