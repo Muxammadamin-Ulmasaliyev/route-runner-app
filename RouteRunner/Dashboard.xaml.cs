@@ -165,7 +165,7 @@ public partial class MainWindow : Window
 
 		DataTemplate tabHeaderTemplate = (DataTemplate)FindResource("TabHeaderTemplate");
 
-		ApplyExtendedTabItemStyle(newTabItem);
+		//ApplyExtendedTabItemStyle(newTabItem);
 
 		newTabItem.HeaderTemplate = tabHeaderTemplate;
 
@@ -244,7 +244,8 @@ public partial class MainWindow : Window
 
 		DataTemplate tabHeaderTemplate = (DataTemplate)FindResource("TabHeaderTemplate");
 
-		ApplyExtendedTabItemStyle(newTabItem);
+		//ApplyExtendedTabItemStyle(newTabItem);
+
 		newTabItem.HeaderTemplate = tabHeaderTemplate;
 
 		requestsTabControl.Items.Add(newTabItem);

@@ -10,7 +10,6 @@
     Title="CollectionsSidebarPage"
     d:DesignHeight="650"
     d:DesignWidth="400"
-    Background="White"
     mc:Ignorable="d">
     <Page.Resources />
 
@@ -19,38 +18,39 @@
             <RowDefinition Height="50" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
+
         <Border
             Grid.Row="0"
-            BorderBrush="{ui:ThemeResource ControlStrongFillColorDisabledBrush}"
+            BorderBrush="{DynamicResource ControlStrongFillColorDisabledBrush}"
             BorderThickness="0.5">
-            <Grid Grid.Row="0" Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}">
+            <Grid Grid.Row="0" Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
 
-                <ui:Button
+                <Button
                     Name="addNewFolderButton"
                     Width="auto"
                     Height="35"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Background="{ui:ThemeResource ControlFillColorInputActiveBrush}"
+                    Background="{DynamicResource ControlFillColorDefaultBrush}"
                     Click="addNewFolderButton_Click"
                     Cursor="Hand">
-                    <fa5:FontAwesome Icon="Solid_Plus" />
+                    <fa5:FontAwesome Foreground="{DynamicResource TextFillColorPrimaryBrush}" Icon="Solid_Plus" />
 
-                </ui:Button>
-
+                </Button>
 
                 <ui:AutoSuggestBox
                     Name="searchBox_Collections"
                     Grid.Column="1"
                     Margin="5,2,5,2"
                     VerticalAlignment="Center"
-                    Background="{ui:ThemeResource ControlFillColorInputActiveBrush}"
+                    Background="{DynamicResource ControlFillColorDefaultBrush}"
                     FontSize="16"
+                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                     PlaceholderText="Search..."
                     TextChanged="searchBox_Collections_TextChanged" />
             </Grid>
@@ -58,9 +58,9 @@
         </Border>
         <Border
             Grid.Row="1"
-            BorderBrush="{ui:ThemeResource ControlStrongFillColorDisabledBrush}"
-            BorderThickness="0.5">
-            <Grid Grid.Row="1" Background="{ui:ThemeResource ControlFillColorInputActiveBrush}">
+            BorderBrush="{DynamicResource ControlStrongFillColorDisabledBrush}"
+            BorderThickness="0">
+            <Grid Grid.Row="1" Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}">
                 <ui:ProgressRing
                     x:Name="loadingBar"
                     Width="50"

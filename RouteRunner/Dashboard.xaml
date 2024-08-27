@@ -32,6 +32,7 @@
         <Style x:Key="LargeSymbolIconStyle" TargetType="ui:SymbolIcon">
             <Setter Property="FontSize" Value="42" />
         </Style>
+
         <DataTemplate x:Key="TabHeaderTemplate">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -76,15 +77,18 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}">
-            <Border BorderBrush="{ui:ThemeResource ControlStrongFillColorDisabledBrush}" BorderThickness="0.5" />
+        <Grid Grid.Row="0" Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}">
+            <Border
+                Background="Transparent"
+                BorderBrush="{DynamicResource ControlStrongFillColorDisabledBrush}"
+                BorderThickness="0.5" />
             <ui:TextBlock
                 Width="Auto"
                 Height="Auto"
                 Margin="10,0,0,0"
                 HorizontalAlignment="Left"
                 FontTypography="TitleLarge"
-                Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                 Text="Route Runner v1.1 beta" />
 
         </Grid>
@@ -97,41 +101,9 @@
                 <ColumnDefinition Width="auto" MinWidth="20" />
             </Grid.ColumnDefinitions>
 
-            <Border BorderBrush="{ui:ThemeResource ControlStrongFillColorDisabledBrush}" BorderThickness="0.5">
+            <Border BorderBrush="{DynamicResource ControlStrongFillColorDisabledBrush}" BorderThickness="0.5">
 
-                <Grid Grid.Column="0" Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}">
-
-                    <!--
-                    <ListBox
-                        x:Name="sidebar"
-                        Margin="0,75,0,0"
-                        SelectionChanged="sidebar_SelectionChanged"
-                        SelectionMode="Single">
-                        <customControls:NavButton
-                            x:Name="collections"
-                            Margin="3,6,3,6"
-                            Padding="6"
-                            Icon="M64 32C64 14.3 49.7 0 32 0S0 14.3 0 32l0 96L0 384c0 35.3 28.7 64 64 64l192 0 0-64L64 384l0-224 192 0 0-64L64 96l0-64zM288 192c0 17.7 14.3 32 32 32l224 0c17.7 0 32-14.3 32-32l0-128c0-17.7-14.3-32-32-32l-98.7 0c-8.5 0-16.6-3.4-22.6-9.4L409.4 9.4c-6-6-14.1-9.4-22.6-9.4L320 0c-17.7 0-32 14.3-32 32l0 160zm0 288c0 17.7 14.3 32 32 32l224 0c17.7 0 32-14.3 32-32l0-128c0-17.7-14.3-32-32-32l-98.7 0c-8.5 0-16.6-3.4-22.6-9.4l-13.3-13.3c-6-6-14.1-9.4-22.6-9.4L320 288c-17.7 0-32 14.3-32 32l0 160z"
-                            NavLink="/Pages/CollectionsSidebarPage.xaml"
-                            ScaleFactor="1.75"
-                            ToolTip="Collections" />
-                        <customControls:NavButton
-                            Margin="3,6,3,6"
-                            Padding="6"
-                            Icon="M32 32l448 0c17.7 0 32 14.3 32 32l0 32c0 17.7-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96L0 64C0 46.3 14.3 32 32 32zm0 128l448 0 0 256c0 35.3-28.7 64-64 64L96 480c-35.3 0-64-28.7-64-64l0-256zm128 80c0 8.8 7.2 16 16 16l160 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-160 0c-8.8 0-16 7.2-16 16z"
-                            NavLink="/Pages/EnvironmentsSidebarPage.xaml"
-                            ScaleFactor="1.75"
-                            ToolTip="Environments" />
-                        <customControls:NavButton
-                            Margin="3,6,3,6"
-                            Padding="6"
-                            Icon="M75 75L41 41C25.9 25.9 0 36.6 0 57.9L0 168c0 13.3 10.7 24 24 24l110.1 0c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24l0 104c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65 0-94.1c0-13.3-10.7-24-24-24z"
-                            NavLink="/Pages/HistorySidebarPage.xaml"
-                            ScaleFactor="1.75"
-                            ToolTip="History" />
-
-                    </ListBox>
-                    -->
+                <Grid Grid.Column="0" Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}">
 
                     <ui:NavigationView
                         x:Name="sidebarNavigationView"
@@ -178,20 +150,15 @@
                     </ui:NavigationView>
                 </Grid>
             </Border>
-            <!--
-            <Grid Grid.Column="1" Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}">
-                <Frame
-                    x:Name="sidebarFrame"
-                    Margin="0,0,0,0"
-                    NavigationUIVisibility="Hidden" />
-            </Grid>-->
+
+
             <GridSplitter
                 Grid.Column="1"
                 Width="4"
                 Margin="0,1,0,1"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Background="{ui:ThemeResource ControlStrongFillColorDisabledBrush}"
+                Background="{DynamicResource ControlFillColorSecondaryBrush}"
                 ResizeBehavior="BasedOnAlignment"
                 ResizeDirection="Columns"
                 Style="{StaticResource GridSplitterStyle}" />
@@ -204,7 +171,7 @@
                 </Grid.RowDefinitions>
 
 
-                <Grid Grid.Row="0">
+                <Grid Grid.Row="0" Background="{DynamicResource CardStrokeColorDefaultBrush}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="auto" />
@@ -212,20 +179,25 @@
                     <Border
                         Grid.Column="0"
                         Padding="0,2,0,0"
-                        BorderBrush="{ui:ThemeResource ControlStrongFillColorDisabledBrush}"
+                        BorderBrush="{DynamicResource ControlStrongFillColorDisabledBrush}"
                         BorderThickness="0.5">
                         <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="7*" />
+                                <ColumnDefinition Width="514*" />
+                            </Grid.ColumnDefinitions>
                             <ui:DynamicScrollViewer
+                                Grid.ColumnSpan="2"
                                 HorizontalScrollBarVisibility="Auto"
                                 PreviewMouseWheel="DynamicScrollViewer_PreviewMouseWheel"
                                 VerticalScrollBarVisibility="Auto">
                                 <StackPanel Orientation="Horizontal">
 
-
                                     <TabControl
                                         Name="requestsTabControl"
                                         Margin="0,0,0,5"
-                                        Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}"
+                                        Background="{DynamicResource ControlFillColorDefaultBrush}"
+                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                         Loaded="requestsTabControl_Loaded"
                                         SelectionChanged="requestsTabControl_SelectionChanged" />
 
@@ -237,7 +209,7 @@
                     <Border
                         Grid.Column="1"
                         Padding="0,2,0,0"
-                        BorderBrush="{ui:ThemeResource ControlStrongFillColorDisabledBrush}"
+                        BorderBrush="{DynamicResource ControlStrongFillColorDisabledBrush}"
                         BorderThickness="0.5">
                         <Grid>
                             <StackPanel Margin="5" Orientation="Horizontal">
@@ -247,14 +219,14 @@
                                     Height="36"
                                     Margin="2,0,2,0"
                                     Appearance="Secondary"
-                                    Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
+                                    Background="{DynamicResource ControlFillColorDefaultBrush}"
                                     Click="addNewRequestButton_Click"
                                     CornerRadius="3"
                                     Cursor="Hand"
                                     ToolTip="Add new request">
                                     <fa5:FontAwesome
                                         FontSize="16"
-                                        Foreground="#646464"
+                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                         Icon="Solid_Plus" />
                                 </ui:Button>
                                 <ComboBox
@@ -264,27 +236,30 @@
                                     MaxWidth="125"
                                     Margin="2,0,2,0"
                                     VerticalAlignment="Center"
-                                    Background="{ui:ThemeResource ControlFillColorInputActiveBrush}"
+                                    Background="{DynamicResource ControlFillColorDefaultBrush}"
                                     DisplayMemberPath="Header"
                                     FontWeight="Bold"
+                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                     SelectionChanged="requestsComboBox_SelectionChanged" />
                             </StackPanel>
                         </Grid>
                     </Border>
                 </Grid>
+
                 <Frame
                     x:Name="mainFrame"
                     Grid.Row="1"
                     Margin="0,0,0,0"
+                    BorderThickness="0"
                     NavigationUIVisibility="Hidden" />
 
             </Grid>
 
             <Border
                 Grid.Column="3"
-                BorderBrush="{ui:ThemeResource ControlStrongFillColorDisabledBrush}"
+                BorderBrush="{DynamicResource ControlStrongFillColorDisabledBrush}"
                 BorderThickness="0.5">
-                <Grid Grid.Column="4" />
+                <Grid Grid.Column="4" Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}" />
             </Border>
         </Grid>
     </Grid>

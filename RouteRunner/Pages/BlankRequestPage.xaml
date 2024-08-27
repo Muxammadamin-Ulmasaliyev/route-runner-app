@@ -12,10 +12,11 @@
     mc:Ignorable="d">
 
     <Grid>
-        <ui:TextBlock
+        <TextBlock
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            FontTypography="Title"
+            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+            Style="{StaticResource TitleLargeTextBlockStyle}"
             Text="this is empty page" />
     </Grid>
 </Page>

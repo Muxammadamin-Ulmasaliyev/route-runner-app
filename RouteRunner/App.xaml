@@ -8,11 +8,17 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ui:ThemesDictionary Theme="Light" />
+
+
+                <ui:ThemesDictionary />
                 <ui:ControlsDictionary />
+
                 <!-- Uncomment when ready:
                 <ui:MenuLoader />
                 <ui:ContextMenuLoader />-->
+
+                <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Themes/Fluent.xaml" />
+
             </ResourceDictionary.MergedDictionaries>
 
             <Color x:Key="SuccessColor">#FF439263</Color>

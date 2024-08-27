@@ -57,6 +57,7 @@ public partial class RequestPage : Page
 
 
 
+
 	}
 
 	private void PopulateHierarchyOfRequest()
@@ -166,6 +167,9 @@ public partial class RequestPage : Page
 			responseStatusCodeTextBlock.Text = string.Empty;
 			responseTimeTextBlock.Text = string.Empty;
 
+
+			statusTextBlock.Foreground = (Brush)statusTextBlock.TryFindResource("SystemFillColorSolidAttentionBackgroundBrush");
+
 			statusTextBlock.Text = "Calling API . . .";
 			progressBar.Visibility = Visibility.Visible;
 			progressBar.IsIndeterminate = true;
@@ -179,6 +183,7 @@ public partial class RequestPage : Page
 	{
 		Dispatcher.Invoke(() =>
 		{
+			statusTextBlock.Foreground = (Brush)statusTextBlock.TryFindResource("SystemFillColorCriticalBrush");
 			statusTextBlock.Text = "Invalid URL";
 			progressBar.Visibility = Visibility.Collapsed;
 			progressBar.IsIndeterminate = false;
@@ -195,15 +200,22 @@ public partial class RequestPage : Page
 		Dispatcher.Invoke(() =>
 		{
 			responseStatusCodeTextBlock.Text = $"Status: {responseStatusCode} {responseStatus}";
-			responseStatusCodeTextBlock.Foreground = Application.Current.Resources["SuccessBrush"] as SolidColorBrush;
+			//responseStatusCodeTextBlock.Foreground = Application.Current.Resources["SuccessBrush"] as SolidColorBrush;
+			responseStatusCodeTextBlock.Foreground = (Brush)statusTextBlock.TryFindResource("SystemFillColorSuccessBrush");
+
 			responseTimeTextBlock.Text = $"Time: {responseTime.Amount} {responseTime.Metric}";
-			responseTimeTextBlock.Foreground = Application.Current.Resources["SuccessBrush"] as SolidColorBrush;
+			//responseTimeTextBlock.Foreground = Application.Current.Resources["SuccessBrush"] as SolidColorBrush;
+			responseTimeTextBlock.Foreground = (Brush)statusTextBlock.TryFindResource("SystemFillColorSuccessBrush");
+
 			responseSizeTextBlock.Text = $"Size: {responseSize.Amount} {responseSize.Metric}";
-			responseSizeTextBlock.Foreground = Application.Current.Resources["SuccessBrush"] as SolidColorBrush;
+			//responseSizeTextBlock.Foreground = Application.Current.Resources["SuccessBrush"] as SolidColorBrush;
+			responseSizeTextBlock.Foreground = (Brush)statusTextBlock.TryFindResource("SystemFillColorSuccessBrush");
+
 
 
 			//responseStatusCodeTextBlock.Foreground = Brushes.Green;
 			responseBodyTextBox.Text = responseBody;
+			statusTextBlock.Foreground = (Brush)statusTextBlock.TryFindResource("SystemFillColorSuccessBrush");
 			statusTextBlock.Text = "Ready";
 			progressBar.Visibility = Visibility.Collapsed;
 			progressBar.IsIndeterminate = false;
@@ -220,15 +232,22 @@ public partial class RequestPage : Page
 		Dispatcher.Invoke(() =>
 		{
 			responseStatusCodeTextBlock.Text = $"Status: {responseStatusCode} {responseStatus}";
-			responseStatusCodeTextBlock.Foreground = Application.Current.Resources["ErrorBrush"] as SolidColorBrush;
+			//responseStatusCodeTextBlock.Foreground = Application.Current.Resources["ErrorBrush"] as SolidColorBrush;
+			responseStatusCodeTextBlock.Foreground = (Brush)statusTextBlock.TryFindResource("SystemFillColorCriticalBrush");
+
 			responseTimeTextBlock.Text = $"Time: {responseTime.Amount} {responseTime.Metric}";
-			responseTimeTextBlock.Foreground = Application.Current.Resources["ErrorBrush"] as SolidColorBrush;
+			//responseTimeTextBlock.Foreground = Application.Current.Resources["ErrorBrush"] as SolidColorBrush;
+			responseTimeTextBlock.Foreground = (Brush)statusTextBlock.TryFindResource("SystemFillColorCriticalBrush");
+
 			responseSizeTextBlock.Text = $"Size: {responseSize.Amount} {responseSize.Metric}";
-			responseSizeTextBlock.Foreground = Application.Current.Resources["ErrorBrush"] as SolidColorBrush;
+			//responseSizeTextBlock.Foreground = Application.Current.Resources["ErrorBrush"] as SolidColorBrush;
+			responseSizeTextBlock.Foreground = (Brush)statusTextBlock.TryFindResource("SystemFillColorCriticalBrush");
+
 
 			//responseStatusCodeTextBlock.Foreground = Brushes.Green;
 			responseBodyTextBox.Text = responseBody;
 			statusTextBlock.Text = "Error";
+			statusTextBlock.Foreground = (Brush)statusTextBlock.TryFindResource("SystemFillColorCriticalBrush");
 			progressBar.Visibility = Visibility.Collapsed;
 			progressBar.IsIndeterminate = false;
 		});
@@ -239,6 +258,8 @@ public partial class RequestPage : Page
 		{
 			responseBodyTextBox.Text = "Error: " + errorMessage;
 			statusTextBlock.Text = "Error";
+			statusTextBlock.Foreground = (Brush)statusTextBlock.TryFindResource("SystemFillColorCriticalBrush");
+
 			progressBar.Visibility = Visibility.Collapsed;
 			progressBar.IsIndeterminate = false;
 		});

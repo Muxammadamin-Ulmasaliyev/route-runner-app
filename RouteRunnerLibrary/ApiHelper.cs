@@ -16,7 +16,6 @@ public class ApiHelper : IApiHelper
 		string bodyContent,
 		bool formatOutput = true)
 	{
-
 		var bodyStringContent = new StringContent(bodyContent, Encoding.UTF8, "application/json");
 		var stopwatch = Stopwatch.StartNew();
 		HttpResponseMessage httpResponseMessage;

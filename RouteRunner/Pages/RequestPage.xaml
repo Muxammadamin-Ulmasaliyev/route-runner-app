@@ -23,6 +23,7 @@
         </Style>
 
     </Page.Resources>
+
     <Grid>
         <Grid>
 
@@ -31,11 +32,10 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="25" />
             </Grid.RowDefinitions>
+
             <Border
                 Grid.Row="0"
-                Padding="10,10,10,10"
-                Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}"
-                BorderBrush="{ui:ThemeResource LayerFillColorDefaultBrush}"
+                BorderBrush="{DynamicResource ControlStrongFillColorDisabledBrush}"
                 BorderThickness="0.5">
                 <Grid>
 
@@ -43,69 +43,78 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel
-                        Grid.Column="0"
-                        VerticalAlignment="Center"
-                        Orientation="Horizontal">
 
+                    <Grid Grid.Column="0" Background="{DynamicResource SolidBackgroundFillColorTertiaryBrush}">
 
-                        <ui:TextBlock
-                            Name="hierarchyTextBlock"
-                            Width="Auto"
-                            Margin="0,0,2,0"
-                            HorizontalAlignment="Left"
+                        <StackPanel
+                            Margin="10"
                             VerticalAlignment="Center"
-                            FontTypography="BodyStrong"
-                            Opacity="0.75"
-                            Text="" />
-                        <ui:TextBox
-                            Name="requestNameTextBox"
-                            HorizontalAlignment="Stretch"
+                            Orientation="Horizontal">
+                            <ui:TextBlock
+                                Name="hierarchyTextBlock"
+                                Width="Auto"
+                                Margin="0,0,2,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontTypography="BodyStrong"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                Opacity="0.75"
+                                Text="" />
+                            <ui:TextBox
+                                Name="requestNameTextBox"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                LostFocus="requestNameTextBox_LostFocus"
+                                PlaceholderText=""
+                                TextChanged="requestNameTextBox_TextChanged" />
+
+                        </StackPanel>
+
+
+                    </Grid>
+
+                    <Grid Grid.Column="1" Background="{DynamicResource SolidBackgroundFillColorTertiaryBrush}">
+                        <StackPanel
+                            Margin="10"
+                            HorizontalAlignment="Right"
                             VerticalAlignment="Center"
-                            Background="Transparent"
-                            BorderBrush="Transparent"
-                            FontSize="16"
-                            FontWeight="Bold"
-                            LostFocus="requestNameTextBox_LostFocus"
-                            PlaceholderText=""
-                            TextChanged="requestNameTextBox_TextChanged" />
+                            Orientation="Horizontal">
+                            <Button
+                                Name="saveRequestButton"
+                                Width="auto"
+                                Height="auto"
+                                Background="{DynamicResource ControlFillColorDefaultBrush}"
+                                Click="saveRequestButton_Click"
+                                Cursor="Hand"
+                                IsEnabled="True"
+                                ToolTip="Save request">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
 
-                    </StackPanel>
+                                        <fa5:FontAwesome
+                                            Margin="5"
+                                            FontSize="18"
+                                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                            Icon="Solid_Save" />
+                                        <ui:TextBlock
+                                            Width="Auto"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontSize="18"
+                                            FontTypography="BodyStrong"
+                                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                            Text="Save" />
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
 
-                    <StackPanel
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <ui:Button
-                            Name="saveRequestButton"
-                            Width="auto"
-                            Height="auto"
-                            Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
-                            Click="saveRequestButton_Click"
-                            CornerRadius="3"
-                            Cursor="Hand"
-                            IsEnabled="True"
-                            ToolTip="Save request">
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal">
-
-                                    <fa5:FontAwesome
-                                        Margin="5"
-                                        FontSize="18"
-                                        Foreground="#646464"
-                                        Icon="Solid_Save" />
-                                    <ui:TextBlock
-                                        Width="Auto"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontSize="18"
-                                        FontTypography="BodyStrong"
-                                        Text="Save" />
-                                </StackPanel>
-                            </Button.Content>
-                        </ui:Button>
-                    </StackPanel>
                 </Grid>
             </Border>
             <Grid Grid.Row="1">
@@ -118,11 +127,9 @@
 
                 <Border
                     Grid.Row="1"
-                    Padding="10,10,10,10"
-                    Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}"
-                    BorderBrush="{ui:ThemeResource LayerFillColorDefaultBrush}"
+                    BorderBrush="{DynamicResource ControlStrongFillColorDisabledBrush}"
                     BorderThickness="0.5">
-                    <Grid>
+                    <Grid Background="{DynamicResource SolidBackgroundFillColorTertiaryBrush}">
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" />
@@ -136,19 +143,22 @@
                             Name="httpVerbsComboBox"
                             Grid.Column="0"
                             MinWidth="100"
-                            Margin="5,0,5,0"
+                            Margin="5,10,5,10"
                             VerticalAlignment="Center"
-                            Background="{ui:ThemeResource ControlFillColorInputActiveBrush}"
+                            Background="{DynamicResource ControlFillColorDefaultBrush}"
                             FontWeight="Bold"
+                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                             SelectionChanged="httpVerbsComboBox_SelectionChanged" />
 
                         <ui:TextBox
                             Name="urlTextBox"
                             Grid.Column="1"
+                            Margin="0,10,0,10"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
-                            Background="{ui:ThemeResource ControlFillColorInputActiveBrush}"
+                            Background="{DynamicResource ControlFillColorDefaultBrush}"
                             FontSize="18"
+                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                             KeyDown="urlTextBox_KeyDown"
                             PlaceholderText="Enter URL"
                             TextChanged="urlTextBox_TextChanged" />
@@ -157,17 +167,20 @@
                             Grid.Column="2"
                             MinWidth="75"
                             MinHeight="40"
-                            Margin="5,0,5,0"
+                            Margin="5,10,5,10"
                             Appearance="Secondary"
-                            Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
+                            Background="{DynamicResource ControlFillColorDefaultBrush}"
                             Click="goButton_Click"
                             Content="Go"
                             Cursor="Hand"
-                            FontWeight="Bold" />
+                            FontWeight="Bold"
+                            Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
                     </Grid>
                 </Border>
 
-                <Grid Grid.Row="2" Margin="0,5,0,0">
+
+                <Grid Grid.Row="2">
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="60*" MinHeight="35" />
@@ -176,70 +189,76 @@
                     </Grid.RowDefinitions>
 
 
+                    <Grid Grid.Row="1" Background="{DynamicResource SolidBackgroundFillColorTertiaryBrush}">
 
-                    <TabControl
-                        x:Name="tabControl"
-                        Grid.Row="1"
-                        Background="{ui:ThemeResource ControlFillColorInputActiveBrush}"
-                        Foreground="Gray">
+                        <TabControl
+                            x:Name="tabControl"
+                            Margin="0,5,0,0"
+                            Background="{DynamicResource ControlAltFillColorTransparentBrush}"
+                            Foreground="{DynamicResource TextFillColorPrimaryBrush}">
 
-                        <TabItem
-                            Width="auto"
-                            FontWeight="SemiBold"
-                            Header="Params">
-                            <ui:TextBlock
-                                Width="Auto"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontTypography="BodyStrong"
-                                Text="This feauture is in development process" />
-                        </TabItem>
-                        <TabItem FontWeight="SemiBold" Header="Authorization">
-                            <ui:TextBlock
-                                Width="Auto"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontTypography="BodyStrong"
-                                Text="This feauture is in development process" />
+                            <TabItem
+                                Width="auto"
+                                FontWeight="SemiBold"
+                                Header="Params">
+                                <ui:TextBlock
+                                    Width="Auto"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontTypography="BodyStrong"
+                                    Text="This feauture is in development process" />
+                            </TabItem>
+                            <TabItem FontWeight="SemiBold" Header="Authorization">
+                                <ui:TextBlock
+                                    Width="Auto"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontTypography="BodyStrong"
+                                    Text="This feauture is in development process" />
 
-                        </TabItem>
-                        <TabItem FontWeight="SemiBold" Header="Headers">
-                            <ui:TextBlock
-                                Width="Auto"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontTypography="BodyStrong"
-                                Text="This feauture is in development process" />
+                            </TabItem>
+                            <TabItem FontWeight="SemiBold" Header="Headers">
+                                <ui:TextBlock
+                                    Width="Auto"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontTypography="BodyStrong"
+                                    Text="This feauture is in development process" />
 
-                        </TabItem>
-                        <TabItem FontWeight="SemiBold" Header="Body">
-                            <ui:TextBox
-                                Name="bodyTextBox"
-                                AcceptsReturn="True"
-                                Background="{ui:ThemeResource ControlFillColorInputActiveBrush}"
-                                FontFamily="Consolas"
-                                FontSize="14"
-                                HorizontalScrollBarVisibility="Auto"
-                                TextWrapping="Wrap"
-                                VerticalScrollBarVisibility="Auto" />
+                            </TabItem>
+                            <TabItem FontWeight="SemiBold" Header="Body">
+                                <ui:TextBox
+                                    Name="bodyTextBox"
+                                    AcceptsReturn="True"
+                                    Background="{DynamicResource ControlOnImageFillColorDefaultBrush}"
+                                    FontFamily="Consolas"
+                                    FontSize="14"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    TextWrapping="Wrap"
+                                    VerticalScrollBarVisibility="Auto" />
 
-                        </TabItem>
+                            </TabItem>
 
-                    </TabControl>
+                        </TabControl>
+
+                    </Grid>
+
+
 
 
                     <GridSplitter
                         Grid.Row="2"
                         Height="4"
-                        Margin="0,1,0,1"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
-                        Background="{ui:ThemeResource ControlStrongFillColorDisabledBrush}"
+                        Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}"
                         ResizeBehavior="BasedOnAlignment"
-                        ResizeDirection="Rows"
-                        Style="{StaticResource GridSplitterStyle}" />
+                        ResizeDirection="Rows" />
 
-                    <Grid Grid.Row="3">
+
+
+
+                    <Grid Grid.Row="3" Background="{DynamicResource SolidBackgroundFillColorTertiaryBrush}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="*" />
@@ -247,9 +266,9 @@
 
                         <Border
                             Grid.Row="0"
-                            BorderBrush="{ui:ThemeResource LayerFillColorDefaultBrush}"
+                            BorderBrush="{DynamicResource ControlStrongFillColorDisabledBrush}"
                             BorderThickness="0.5">
-                            <Grid>
+                            <Grid Background="{DynamicResource SolidBackgroundFillColorTertiaryBrush}">
                                 <StackPanel
                                     Name="responseBodyUpperPanel"
                                     HorizontalAlignment="Right"
@@ -263,6 +282,7 @@
                                         Margin="0,2,15,2"
                                         HorizontalAlignment="Right"
                                         FontTypography="BodyStrong"
+                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                         Text="Status: " />
                                     <ui:TextBlock
                                         Name="responseTimeTextBlock"
@@ -271,6 +291,7 @@
                                         Margin="0,2,15,2"
                                         HorizontalAlignment="Right"
                                         FontTypography="BodyStrong"
+                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                         Text="Time: " />
                                     <ui:TextBlock
                                         Name="responseSizeTextBlock"
@@ -279,18 +300,20 @@
                                         Margin="0,2,15,2"
                                         HorizontalAlignment="Right"
                                         FontTypography="BodyStrong"
+                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                         Text="Size: " />
                                     <ui:Button
                                         Name="copyResponseBody"
                                         Width="auto"
                                         Height="auto"
-                                        Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
+                                        Background="{DynamicResource ControlFillColorDefaultBrush}"
                                         Click="copyResponseBody_Click"
                                         CornerRadius="3"
                                         Cursor="Hand"
+                                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                         ToolTip="Copy response">
                                         <Button.Content>
-                                            <fa5:FontAwesome Foreground="#646464" Icon="Solid_Copy" />
+                                            <fa5:FontAwesome Foreground="{DynamicResource TextFillColorPrimaryBrush}" Icon="Solid_Copy" />
                                         </Button.Content>
                                     </ui:Button>
                                 </StackPanel>
@@ -299,15 +322,18 @@
 
                         <ui:DynamicScrollViewer
                             Grid.Row="1"
-                            Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}"
+                            Background="{DynamicResource ControlStrongFillColorDisabledBrush}"
                             HorizontalScrollBarVisibility="Auto"
                             VerticalScrollBarVisibility="Auto">
 
                             <ui:TextBox
                                 Name="responseBodyTextBox"
+                                Margin="2"
                                 AcceptsReturn="True"
+                                Background="{DynamicResource ControlOnImageFillColorDefaultBrush}"
                                 FontFamily="Consolas"
                                 FontSize="14"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                 IsReadOnly="True"
                                 TextWrapping="Wrap" />
 
@@ -322,9 +348,8 @@
                             HorizontalAlignment="Left"
                             FontSize="16"
                             FontTypography="BodyStrong"
-                            Foreground="Black"
+                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                             IsEnabled="False"
-                            Opacity="0.75"
                             Text="Response " />
 
                     </Grid>
@@ -332,6 +357,7 @@
             </Grid>
 
             <Grid Grid.Row="2" Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}">
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -352,7 +378,6 @@
                     Height="12"
                     Margin="0,3,0,0"
                     VerticalAlignment="Bottom"
-                    Background="Transparent"
                     IsIndeterminate="False"
                     Visibility="Collapsed" />
             </Grid>
