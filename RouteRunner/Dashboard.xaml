@@ -95,21 +95,25 @@
         <Grid Grid.Row="1">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" MaxWidth="450" />
+                <ColumnDefinition
+                    Width="auto"
+                    MinWidth="65"
+                    MaxWidth="450" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="auto" MinWidth="20" />
             </Grid.ColumnDefinitions>
 
-            <Border BorderBrush="{DynamicResource ControlStrongFillColorDisabledBrush}" BorderThickness="0.5">
 
-                <Grid Grid.Column="0" Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}">
+            <Grid Grid.Column="0" Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}">
+                <Border BorderBrush="{DynamicResource ControlStrongFillColorDisabledBrush}" BorderThickness="0.5">
 
                     <ui:NavigationView
                         x:Name="sidebarNavigationView"
                         Width="auto"
                         AlwaysShowHeader="False"
                         HeaderVisibility="Collapsed"
+                        IsBackButtonVisible="Collapsed"
                         IsPaneToggleVisible="False"
                         PaneDisplayMode="LeftFluent"
                         SelectionChanged="sidebarNavigationView_SelectionChanged">
@@ -119,8 +123,9 @@
                                 Content="Collections"
                                 TargetPageType="{x:Type pages:CollectionsSidebarPage}">
                                 <ui:NavigationViewItem.Icon>
-                                    <ui:SymbolIcon Symbol="Folder48" />
+                                    <ui:SymbolIcon FontSize="32" Symbol="Folder48" />
                                 </ui:NavigationViewItem.Icon>
+
                             </ui:NavigationViewItem>
                             <ui:NavigationViewItem
                                 Name="environmentsNavItem"
@@ -148,18 +153,16 @@
                             </ui:NavigationViewItem>
                         </ui:NavigationView.FooterMenuItems>
                     </ui:NavigationView>
-                </Grid>
-            </Border>
+                </Border>
+            </Grid>
 
 
             <GridSplitter
                 Grid.Column="1"
                 Width="4"
-                Margin="0,1,0,1"
-                HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Background="{DynamicResource ControlFillColorSecondaryBrush}"
-                ResizeBehavior="BasedOnAlignment"
+                Background="{DynamicResource ControlStrongFillColorDisabledBrush}"
+                ResizeBehavior="PreviousAndNext"
                 ResizeDirection="Columns"
                 Style="{StaticResource GridSplitterStyle}" />
 
@@ -171,7 +174,7 @@
                 </Grid.RowDefinitions>
 
 
-                <Grid Grid.Row="0" Background="{DynamicResource CardStrokeColorDefaultBrush}">
+                <Grid Grid.Row="0" Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="auto" />
@@ -188,6 +191,7 @@
                             </Grid.ColumnDefinitions>
                             <ui:DynamicScrollViewer
                                 Grid.ColumnSpan="2"
+                                Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}"
                                 HorizontalScrollBarVisibility="Auto"
                                 PreviewMouseWheel="DynamicScrollViewer_PreviewMouseWheel"
                                 VerticalScrollBarVisibility="Auto">

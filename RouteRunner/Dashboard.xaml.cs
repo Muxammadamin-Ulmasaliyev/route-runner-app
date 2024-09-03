@@ -27,7 +27,24 @@ public partial class MainWindow : Window
 		EventNotificationService.Instance.RequestNameChangedInTextBoxEvent += RequestNameChangedInTextBoxEvent; ;
 
 
+
+		mainFrame.Navigated += (s, e) =>
+		{
+			if (e.Content is Page page)
+			{
+
+				ApplyDynamicResourceToPage(page);
+			}
+		};
+
 	}
+	private void ApplyDynamicResourceToPage(Page page)
+	{
+		// Ensure the page's Background uses the dynamic resource
+		page.SetResourceReference(Page.BackgroundProperty, "DynamicBackgroundBrush");
+	}
+
+	// When navigating, update the newly loaded page's resource
 
 	private void RequestNameChangedInTextBoxEvent(object? sender, (int tabIndex, string requestName) data)
 	{
