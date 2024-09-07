@@ -67,6 +67,11 @@ public partial class UpsertFolderWindow : Window
 
 	private void saveButton_Click(object sender, RoutedEventArgs e)
 	{
+		if(string.IsNullOrWhiteSpace(folderNameTextBox.Text))
+		{
+			MessageBox.Show("Folder name cannot be empty.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK);
+			return;
+		}
 		var createdFolder = CreateNewFolder();
 		NewFolderCreatedEvent?.Invoke(this, createdFolder);
 		this.Close();
@@ -86,4 +91,6 @@ public partial class UpsertFolderWindow : Window
 		}
 
 	}
+
+	
 }

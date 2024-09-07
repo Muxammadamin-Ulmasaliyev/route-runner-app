@@ -292,6 +292,7 @@ public partial class CollectionsSidebarPage : Page
 						return;
 					}
 					existingParentFolder.Items.Remove(requestTreeViewItemToRemove);
+					EventNotificationService.Instance.RequestDeleted_CollectionsTreeView(requestToDelete);
 				}
 				else
 				{

@@ -11,6 +11,7 @@ public class EventNotificationService
 	public event EventHandler<(int, SavedRequest)> NewRequestCreatedEvent;
 	public event EventHandler<(int, string)> RequestNameChangedInTextBoxEvent;
 	public event EventHandler<SavedRequest> ExistingRequestSavedEvent;
+	public event EventHandler<SavedRequest> RequestDeletedEvent;
 
 	// Private constructor to prevent instantiation
 	private EventNotificationService() { }
@@ -45,5 +46,10 @@ public class EventNotificationService
 	public void ExistingRequestSaved(SavedRequest updatedRequest)
 	{
 		ExistingRequestSavedEvent.Invoke(this, updatedRequest);
+	}
+
+	public void RequestDeleted_CollectionsTreeView(SavedRequest request)
+	{
+		RequestDeletedEvent.Invoke(this, request);
 	}
 }

@@ -315,7 +315,7 @@
                         </StackPanel>
                     </Grid>
 
-                    <ui:DynamicScrollViewer
+                    <ScrollViewer
                         Grid.Row="1"
                         Background="{DynamicResource ControlStrongFillColorDisabledBrush}"
                         HorizontalScrollBarVisibility="Auto"
@@ -332,7 +332,7 @@
                             IsReadOnly="True"
                             TextWrapping="Wrap" />
 
-                    </ui:DynamicScrollViewer>
+                    </ScrollViewer>
 
                     <ui:TextBlock
                         Name="responseTextBlock"
@@ -366,6 +366,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 FontTypography="BodyStrong"
+                Foreground="{DynamicResource SystemFillColorAttentionBrush}"
                 Text="Ready" />
             <ProgressBar
                 Name="progressBar"

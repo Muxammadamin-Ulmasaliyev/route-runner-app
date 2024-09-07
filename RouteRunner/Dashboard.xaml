@@ -5,6 +5,7 @@
     xmlns:customControls="clr-namespace:RouteRunner.CustomControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fa5="http://schemas.fontawesome.com/icons/"
+    xmlns:helpers="clr-namespace:RouteRunner.Helpers"
     xmlns:local="clr-namespace:RouteRunner"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="clr-namespace:RouteRunner.Pages"
@@ -14,8 +15,11 @@
     Height="550"
     MinWidth="800"
     MinHeight="550"
+    Activated="Window_StateChangedOrLoaded"
+    Deactivated="Window_StateChangedOrLoaded"
     KeyDown="Window_KeyDown"
     KeyUp="Window_KeyUp"
+    Loaded="Window_StateChangedOrLoaded"
     mc:Ignorable="d">
     <Window.Resources>
         <Style x:Key="GridSplitterStyle" TargetType="GridSplitter">
@@ -74,6 +78,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition MaxHeight="50" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
 
@@ -87,12 +92,30 @@
                 Height="Auto"
                 Margin="10,0,0,0"
                 HorizontalAlignment="Left"
+                Panel.ZIndex="1"
                 FontTypography="TitleLarge"
                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                 Text="Route Runner v1.1 beta" />
 
         </Grid>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}">
+            <Border
+                Background="Transparent"
+                BorderBrush="{DynamicResource ControlStrongFillColorDisabledBrush}"
+                BorderThickness="0.5" />
+
+            <ui:InfoBar
+                Name="infoBar"
+                Title="Warning"
+                Panel.ZIndex="2"
+                IsClosable="False"
+                IsOpen="True"
+                Message="No internet connection !!!"
+                Severity="Error"
+                Visibility="Collapsed" />
+
+        </Grid>
+        <Grid Grid.Row="2">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
@@ -202,7 +225,6 @@
                                         Margin="0,0,0,5"
                                         Background="{DynamicResource ControlFillColorDefaultBrush}"
                                         Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                        Loaded="requestsTabControl_Loaded"
                                         SelectionChanged="requestsTabControl_SelectionChanged" />
 
 

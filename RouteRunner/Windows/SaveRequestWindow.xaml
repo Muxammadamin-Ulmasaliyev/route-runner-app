@@ -10,117 +10,124 @@
     Title="SaveRequestWindow"
     Width="800"
     Height="650"
-    Background="#eaeaea"
-    ResizeMode="NoResize"
+    ResizeMode="CanResize"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="100" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="75" />
-        </Grid.RowDefinitions>
-        <ui:TextBlock
-            Width="Auto"
-            Margin="10"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            FontTypography="Title"
-            Text="SAVE REQUEST" />
-        <Grid Grid.Row="1" Margin="10">
-            <StackPanel Orientation="Vertical">
+    <Grid Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}">
+        <ScrollViewer
+            Background="{DynamicResource ControlFillColorDefaultBrush}"
+            HorizontalScrollBarVisibility="Auto"
+            PreviewMouseWheel="DynamicScrollViewer_PreviewMouseWheel"
+            VerticalScrollBarVisibility="Auto">
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="75" />
+                </Grid.RowDefinitions>
                 <ui:TextBlock
                     Width="Auto"
+                    Margin="10"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    FontTypography="BodyStrong"
-                    Opacity="0.75"
-                    Text="Request name" />
-                <ui:TextBox
-                    Name="requestNameTextBox"
-                    Margin="0,3,0,0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Center"
-                    Background="{ui:ThemeResource ControlFillColorInputActiveBrush}"
-                    FontSize="18" />
-            </StackPanel>
-        </Grid>
+                    FontTypography="Title"
+                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                    Text="SAVE REQUEST" />
+                <Grid Grid.Row="1" Margin="10">
+                    <StackPanel Orientation="Vertical">
+                        <ui:TextBlock
+                            Width="Auto"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontTypography="BodyStrong"
+                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                            Opacity="0.75"
+                            Text="Request name" />
+                        <ui:TextBox
+                            Name="requestNameTextBox"
+                            Margin="0,3,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            Background="{DynamicResource ControlFillColorDefaultBrush}"
+                            FontSize="18" />
+                    </StackPanel>
+                </Grid>
 
-        <Grid Grid.Row="2" Margin="10">
-            <StackPanel Orientation="Vertical">
-                <StackPanel
-                    Margin="5"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
+                <Grid Grid.Row="2" Margin="10">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel
+                            Margin="5"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
 
-                    <ui:TextBlock
-                        Width="Auto"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        FontTypography="BodyStrong"
-                        Opacity="0.75"
-                        Text="Save to    " />
-                    <ui:BreadcrumbBar
-                        Name="breadCrumbBar"
-                        Cursor="Hand"
-                        DisplayMemberPath="Name"
-                        ItemClicked="breadCrumbBar_ItemClicked" />
-                </StackPanel>
+                            <ui:TextBlock
+                                Width="Auto"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontTypography="BodyStrong"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                Opacity="0.75"
+                                Text="Save to  :  " />
+                            <ui:BreadcrumbBar
+                                Name="breadCrumbBar"
+                                Cursor="Hand"
+                                DisplayMemberPath="Name"
+                                ItemClicked="breadCrumbBar_ItemClicked" />
+                        </StackPanel>
 
-                <Border
-                    Padding="10,10,10,10"
-                    Background="{ui:ThemeResource SurfaceStrokeColorFlyoutBrush}"
-                    BorderBrush="{ui:ThemeResource LayerFillColorDefaultBrush}"
-                    BorderThickness="0.5">
-                    <ui:ListView
-                        x:Name="foldersListView"
-                        Height="275"
-                        MouseDoubleClick="foldersListView_MouseDoubleClick"
-                        ScrollViewer.CanContentScroll="False"
-                        ScrollViewer.VerticalScrollBarVisibility="Visible"
-                        SelectionMode="Single" />
-                </Border>
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Row="3" Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="auto" />
-            </Grid.ColumnDefinitions>
+                        <Border
+                            Padding="10,10,10,10"
+                            Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}"
+                            BorderBrush="{DynamicResource LayerFillColorDefaultBrush}"
+                            BorderThickness="0.5">
+                            <ui:ListView
+                                x:Name="foldersListView"
+                                Height="275"
+                                MouseDoubleClick="foldersListView_MouseDoubleClick"
+                                ScrollViewer.CanContentScroll="False"
+                                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                SelectionMode="Single" />
+                        </Border>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="3" Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
 
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <ui:Button
+                            Name="saveRequestButton"
+                            Width="110"
+                            Height="40"
+                            Margin="3"
+                            Appearance="Primary"
+                            Background="{DynamicResource AccentFillColorDefaultBrush}"
+                            Click="saveRequestButton_Click"
+                            Content="Save"
+                            Cursor="Hand"
+                            FontSize="24"
+                            FontWeight="Bold"
+                            ToolTip="Save request" />
+                        <ui:Button
+                            Name="cancelButton"
+                            Width="110"
+                            Height="40"
+                            Margin="3"
+                            Background="{DynamicResource ControlFillColorDefaultBrush}"
+                            Click="cancelButton_Click"
+                            Content="Cancel"
+                            Cursor="Hand"
+                            FontSize="24"
+                            FontWeight="Bold"
+                            ToolTip="Cancel" />
 
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
 
-
-            <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <ui:Button
-                    Name="saveRequestButton"
-                    Width="110"
-                    Height="40"
-                    Margin="3"
-                    Appearance="Info"
-                    Click="saveRequestButton_Click"
-                    Content="Save"
-                    CornerRadius="3"
-                    Cursor="Hand"
-                    FontSize="24"
-                    FontWeight="Bold"
-                    ToolTip="Save request" />
-                <ui:Button
-                    Name="cancelButton"
-                    Width="110"
-                    Height="40"
-                    Margin="3"
-                    Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
-                    Click="cancelButton_Click"
-                    Content="Cancel"
-                    CornerRadius="3"
-                    Cursor="Hand"
-                    FontSize="24"
-                    FontWeight="Bold"
-                    ToolTip="Cancel" />
-
-            </StackPanel>
-        </Grid>
     </Grid>
 </Window>

@@ -168,7 +168,7 @@ public partial class RequestPage : Page
 			responseTimeTextBlock.Text = string.Empty;
 
 
-			statusTextBlock.Foreground = (Brush)statusTextBlock.TryFindResource("SystemFillColorSolidAttentionBackgroundBrush");
+			statusTextBlock.Foreground = (Brush)statusTextBlock.TryFindResource("SystemFillColorAttentionBrush");
 
 			statusTextBlock.Text = "Calling API . . .";
 			progressBar.Visibility = Visibility.Visible;
