@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="clr-namespace:RouteRunner.Pages"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    Title="RouteRunner v2.0"
+    Title="RouteRunner v1.1"
     Width="800"
     Height="550"
     MinWidth="800"
