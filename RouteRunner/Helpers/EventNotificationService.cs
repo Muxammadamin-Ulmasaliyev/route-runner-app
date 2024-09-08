@@ -8,10 +8,10 @@ public class EventNotificationService
 	private static EventNotificationService _instance;
 
 	// Event to notify subscribers
-	public event EventHandler<(int, SavedRequest)> NewRequestCreatedEvent;
+	public event EventHandler<(int, Request)> NewRequestCreatedEvent;
 	public event EventHandler<(int, string)> RequestNameChangedInTextBoxEvent;
-	public event EventHandler<SavedRequest> ExistingRequestSavedEvent;
-	public event EventHandler<SavedRequest> RequestDeletedEvent;
+	public event EventHandler<Request> ExistingRequestSavedEvent;
+	public event EventHandler<Request> RequestDeletedEvent;
 
 	// Private constructor to prevent instantiation
 	private EventNotificationService() { }
@@ -32,7 +32,7 @@ public class EventNotificationService
 
 	// Method to trigger the event
 
-	public void NewRequestCreated(SavedRequest createdRequest, int tabIndex)
+	public void NewRequestCreated(Request createdRequest, int tabIndex)
 	{
 		NewRequestCreatedEvent?.Invoke(this, (tabIndex,createdRequest));
 	}
@@ -43,12 +43,12 @@ public class EventNotificationService
 		RequestNameChangedInTextBoxEvent.Invoke(this, (tabIndex, requestName));
 	}
 
-	public void ExistingRequestSaved(SavedRequest updatedRequest)
+	public void ExistingRequestSaved(Request updatedRequest)
 	{
 		ExistingRequestSavedEvent.Invoke(this, updatedRequest);
 	}
 
-	public void RequestDeleted_CollectionsTreeView(SavedRequest request)
+	public void RequestDeleted_CollectionsTreeView(Request request)
 	{
 		RequestDeletedEvent.Invoke(this, request);
 	}

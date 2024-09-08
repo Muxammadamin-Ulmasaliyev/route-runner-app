@@ -46,7 +46,7 @@ public partial class MainWindow : Window
 
 
 	#region Event Handlers
-	private void HandleRequestDeletedEvent(object? sender, SavedRequest deletedRequest)
+	private void HandleRequestDeletedEvent(object? sender, Request deletedRequest)
 	{
 		var tabIndex = IfTabAlreadyOpened(deletedRequest);
 		if (tabIndex != -1)
@@ -54,7 +54,7 @@ public partial class MainWindow : Window
 			tabItems.RemoveAt(tabIndex);
 		}
 	}
-	private void CollectionsPage_NewRequestOpened(object? sender, RouteRunnerLibrary.Models.SavedRequest request)
+	private void CollectionsPage_NewRequestOpened(object? sender, RouteRunnerLibrary.Models.Request request)
 	{
 		var tabIndex = IfTabAlreadyOpened(request);
 		if (tabIndex != -1)
@@ -127,7 +127,7 @@ public partial class MainWindow : Window
 	{
 		AddNewRequestToTabView();
 	}
-	private void AddNewRequestToTabView(SavedRequest? request = null)
+	private void AddNewRequestToTabView(Request? request = null)
 	{
 		TabItem newTabItem;
 		if (request == null)
@@ -152,7 +152,7 @@ public partial class MainWindow : Window
 		RequestPage requestPage;
 		if (request == null)
 		{
-			requestPage = new RequestPage(requestsTabControl.Items.Count - 1, new SavedRequest() { Name = "Untitled request", HttpVerb = HttpVerb.GET, Url = "" });
+			requestPage = new RequestPage(requestsTabControl.Items.Count - 1, new Request() { Name = "Untitled request", HttpVerb = HttpVerb.GET, Url = "" });
 
 		}
 		else
@@ -179,7 +179,7 @@ public partial class MainWindow : Window
 	/// </summary>
 	/// <param name="request"></param>
 	/// <returns></returns>
-	private int IfTabAlreadyOpened(SavedRequest request)
+	private int IfTabAlreadyOpened(Request request)
 	{
 		for (int i = 0; i < requestsTabControl.Items.Count; i++)
 		{

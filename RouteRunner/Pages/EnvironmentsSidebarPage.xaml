@@ -11,11 +11,12 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}">
         <ui:TextBlock
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontTypography="Title"
+            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
             Text="this is environments page" />
     </Grid>
 </Page>

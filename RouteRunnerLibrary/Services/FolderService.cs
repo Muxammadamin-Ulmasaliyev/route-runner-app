@@ -62,10 +62,10 @@ public class FolderService
 
 		// Delete subfolders and requests
 		var subFolders = _appDbContext.Folders.Where(f => f.ParentId == id).ToList();
-		var requests = _appDbContext.SavedRequests.Where(r => r.FolderId == id).ToList();
+		var requests = _appDbContext.Requests.Where(r => r.FolderId == id).ToList();
 
 		_appDbContext.Folders.RemoveRange(subFolders);
-		_appDbContext.SavedRequests.RemoveRange(requests);
+		_appDbContext.Requests.RemoveRange(requests);
 		_appDbContext.Folders.Remove(folder);
 
 		_appDbContext.SaveChanges();

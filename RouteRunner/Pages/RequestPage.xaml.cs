@@ -17,7 +17,7 @@ public partial class RequestPage : Page
 {
 	private readonly IApiHelper api = new ApiHelper();
 
-	private SavedRequest _currentRequest;
+	private Request _currentRequest;
 	private int _currentTabIndex;
 
 	private readonly SavedRequestService _requestService;
@@ -30,7 +30,7 @@ public partial class RequestPage : Page
 	{
 		return _currentRequest.Name;
 	}
-	public RequestPage(int currentTabIndex, SavedRequest? currentRequest = null)
+	public RequestPage(int currentTabIndex, Request? currentRequest = null)
 	{
 
 		_requestService = new(new AppDbContext());
@@ -77,7 +77,7 @@ public partial class RequestPage : Page
 
 	}
 
-	private void NewRequestCreatedEvent(object? sender, (int tabIndex, SavedRequest request) data)
+	private void NewRequestCreatedEvent(object? sender, (int tabIndex, Request request) data)
 	{
 		if (_currentTabIndex == data.tabIndex)
 		{

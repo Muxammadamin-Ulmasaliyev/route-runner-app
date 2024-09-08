@@ -16,6 +16,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontTypography="Title"
+            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
             Text="this is history page" />
     </Grid>
 </Page>

@@ -18,11 +18,11 @@ namespace RouteRunner.Windows;
 
 public partial class SaveRequestWindow : Window
 {
-	private SavedRequest _currentRequest;
+	private Request _currentRequest;
 	private readonly FolderService _folderService;
 	private readonly SavedRequestService _requestService;
 	private int _tabIndexOfRequest;
-	public SaveRequestWindow(SavedRequest request, int tabIndexOfRequest)
+	public SaveRequestWindow(Request request, int tabIndexOfRequest)
 	{
 
 		_folderService = new FolderService(new AppDbContext());
@@ -89,7 +89,7 @@ public partial class SaveRequestWindow : Window
 		};
 	}
 
-	private ListViewItem CreateCustomStyledRequestListViewItem(SavedRequest request, BitmapImage requestIcon)
+	private ListViewItem CreateCustomStyledRequestListViewItem(Request request, BitmapImage requestIcon)
 	{
 		StackPanel stack = new StackPanel { Orientation = Orientation.Horizontal };
 		Image icon = new Image
@@ -135,7 +135,7 @@ public partial class SaveRequestWindow : Window
 		return _folderService.GetFolderById(id);
 	}
 
-	private List<SavedRequest> GetRequests(int folderId)
+	private List<Request> GetRequests(int folderId)
 	{
 
 		return _requestService.GetRequestsByFolderId(folderId);
@@ -198,7 +198,7 @@ public partial class SaveRequestWindow : Window
 
 			if (clickedItem is ListViewItem listViewItem)
 			{
-				if (listViewItem.Tag is SavedRequest)
+				if (listViewItem.Tag is Request)
 				{
 					return;
 				}
@@ -283,7 +283,7 @@ public partial class SaveRequestWindow : Window
 
 		var parentFolder = breadCrumbBar.Items[breadCrumbBar.Items.Count - 1] as Folder;
 
-		var createdRequest = _requestService.CreateRequest(new SavedRequest()
+		var createdRequest = _requestService.CreateRequest(new Request()
 		{
 			Name = requestNameTextBox.Text,
 			HttpVerb = _currentRequest.HttpVerb,

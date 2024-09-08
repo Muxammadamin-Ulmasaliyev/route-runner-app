@@ -20,7 +20,7 @@ public partial class CollectionsSidebarPage : Page
 	private readonly FolderService _folderService;
 	private readonly SavedRequestService _requestService;
 
-	public event EventHandler<SavedRequest> NewRequestOpened;
+	public event EventHandler<Request> NewRequestOpened;
 
 	public CollectionsSidebarPage()
 	{
@@ -35,12 +35,12 @@ public partial class CollectionsSidebarPage : Page
 		EventNotificationService.Instance.ExistingRequestSavedEvent += ExistingRequestSavedEventHandler; ;
 	}
 
-	private void ExistingRequestSavedEventHandler(object? sender, SavedRequest updatedRequest)
+	private void ExistingRequestSavedEventHandler(object? sender, Request updatedRequest)
 	{
 		UpdateRequestInTreeView(updatedRequest);
 	}
 
-	private void UpdateRequestInTreeView(SavedRequest updatedRequest)
+	private void UpdateRequestInTreeView(Request updatedRequest)
 	{
 		var existingRequestTreeViewItem = FindTreeViewItemByName(foldersTree.Items, $"request{updatedRequest.Id}");
 
@@ -66,7 +66,7 @@ public partial class CollectionsSidebarPage : Page
 		}
 	}
 
-	private void NewRequestCreatedEventHandler(object? sender, (int tabIndex , SavedRequest newRequest) data)
+	private void NewRequestCreatedEventHandler(object? sender, (int tabIndex , Request newRequest) data)
 	{
 		AddNewRequestToTree(data.newRequest);
 	}
@@ -185,7 +185,7 @@ public partial class CollectionsSidebarPage : Page
 		};
 	}
 
-	private TreeViewItem GenerateCustomRequestTreeViewItem(SavedRequest request, ContextMenu requestContextMenu)
+	private TreeViewItem GenerateCustomRequestTreeViewItem(Request request, ContextMenu requestContextMenu)
 	{
 		StackPanel stack = new StackPanel { Orientation = Orientation.Horizontal };
 
@@ -272,7 +272,7 @@ public partial class CollectionsSidebarPage : Page
 
 			var existingParentFolder = requestTreeViewItemToRemove.Parent as TreeViewItem;
 
-			var requestToDelete = requestTreeViewItemToRemove.Tag as SavedRequest;
+			var requestToDelete = requestTreeViewItemToRemove.Tag as Request;
 
 			var result = MessageBox.Show("Are you sure to delete request : " + requestToDelete.Name + " ?", "Warning"
 				, MessageBoxButton.YesNo
@@ -313,7 +313,7 @@ public partial class CollectionsSidebarPage : Page
 
 		var treeViewItem = contextMenu.PlacementTarget as TreeViewItem;
 
-		if (treeViewItem.Tag is SavedRequest request)
+		if (treeViewItem.Tag is Request request)
 		{
 			//var request = _requestService.GetRequestById(int.Parse(treeViewItem.Name.Remove(0, 7)));
 			NewRequestOpened?.Invoke(this, request);
@@ -395,14 +395,14 @@ public partial class CollectionsSidebarPage : Page
 		}
 	}
 
-	private SavedRequest CreateNewRequest(int parentFolderId)
+	private Request CreateNewRequest(int parentFolderId)
 	{
-		var newRequest = _requestService.CreateRequest(new SavedRequest() { Name = $"New Request {DateTime.Now.ToString("dd-MM-yyyy HH-mm-ss")}", Url = "", HttpVerb = HttpVerb.GET, FolderId = parentFolderId });
+		var newRequest = _requestService.CreateRequest(new Request() { Name = $"New Request {DateTime.Now.ToString("dd-MM-yyyy HH-mm-ss")}", Url = "", HttpVerb = HttpVerb.GET, FolderId = parentFolderId });
 		return newRequest;
 	}
 
 
-	private void AddNewRequestToTree(SavedRequest request)
+	private void AddNewRequestToTree(Request request)
 	{
 		// Create a new TreeViewItem for the request
 
@@ -552,7 +552,7 @@ public partial class CollectionsSidebarPage : Page
 		var treeViewItem = clickedItem as TreeViewItem;
 		//var treeViewItem = sender as TreeViewItem;
 
-		if (treeViewItem.Tag is SavedRequest request)
+		if (treeViewItem.Tag is Request request)
 		{
 			//var request = _requestService.GetRequestById(int.Parse(treeViewItem.Name.Remove(0, 7)));
 			NewRequestOpened?.Invoke(this, request);

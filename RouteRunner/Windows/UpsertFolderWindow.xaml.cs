@@ -12,7 +12,7 @@ public partial class UpsertFolderWindow : Window
 	private readonly FolderService _folderService;
 	private readonly SavedRequestService _requestService;
 	public event EventHandler<Folder> NewFolderCreatedEvent;
-	public event EventHandler<SavedRequest> NewRequestCreatedEvent;
+	public event EventHandler<Request> NewRequestCreatedEvent;
 
 	private int? parentFolderId = null;
 

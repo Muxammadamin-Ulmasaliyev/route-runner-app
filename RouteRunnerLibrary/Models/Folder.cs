@@ -9,5 +9,5 @@ public class Folder
 	public Folder? Parent { get; set; }
 
 	public ICollection<Folder>? SubFolders { get; set; }
-	public ICollection<SavedRequest>? SavedRequests { get; set; }
+	public ICollection<Request>? SavedRequests { get; set; }
 }

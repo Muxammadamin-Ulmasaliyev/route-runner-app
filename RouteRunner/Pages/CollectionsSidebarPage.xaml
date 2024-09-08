@@ -22,18 +22,20 @@
         <Border
             Grid.Row="0"
             BorderBrush="{DynamicResource ControlStrongFillColorDisabledBrush}"
-            BorderThickness="0.5">
+            BorderThickness="0,0,0,0.5">
             <Grid Grid.Row="0" Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
 
                 <Button
                     Name="addNewFolderButton"
                     Width="auto"
                     Height="35"
+                    Margin="5,2,5,2"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Background="{DynamicResource ControlFillColorDefaultBrush}"
@@ -53,6 +55,24 @@
                     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                     PlaceholderText="Search..."
                     TextChanged="searchBox_Collections_TextChanged" />
+                <Button
+                    Name="importRequestButton"
+                    Grid.Column="2"
+                    Width="auto"
+                    Height="35"
+                    Margin="5,2,5,2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="{DynamicResource ControlFillColorDefaultBrush}"
+                    Cursor="Hand"
+                    IsEnabled="False">
+                    <ui:TextBlock
+                        FontTypography="BodyStrong"
+                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                        Text="Import" />
+
+                </Button>
+
             </Grid>
 
         </Border>
