@@ -120,7 +120,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
                     Width="auto"
-                    MinWidth="65"
+                    MinWidth="50"
                     MaxWidth="450" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="1*" />
@@ -136,8 +136,8 @@
                         Width="auto"
                         AlwaysShowHeader="False"
                         HeaderVisibility="Collapsed"
-                        IsBackButtonVisible="Collapsed"
-                        IsPaneToggleVisible="False"
+                        IsBackButtonVisible="Auto"
+                        IsPaneToggleVisible="True"
                         PaneDisplayMode="LeftFluent"
                         SelectionChanged="sidebarNavigationView_SelectionChanged">
                         <ui:NavigationView.MenuItems>

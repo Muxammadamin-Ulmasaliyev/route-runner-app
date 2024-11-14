@@ -52,7 +52,7 @@ public partial class CollectionsSidebarPage : Page
 			{
 				var index = existingParentFolder.Items.IndexOf(existingRequestTreeViewItem);
 
-				existingParentFolder.Items[index] = GenerateCustomRequestTreeViewItem(updatedRequest, GenerateContextMenuForRequest());
+				existingParentFolder.Items[index] = ElementDesigner.GenerateCustomRequestTreeViewItem(updatedRequest, GenerateContextMenuForRequest());
 			}
 			else
 			{
@@ -66,7 +66,7 @@ public partial class CollectionsSidebarPage : Page
 		}
 	}
 
-	private void NewRequestCreatedEventHandler(object? sender, (int tabIndex , Request newRequest) data)
+	private void NewRequestCreatedEventHandler(object? sender, (int tabIndex, Request newRequest) data)
 	{
 		AddNewRequestToTree(data.newRequest);
 	}
@@ -93,12 +93,14 @@ public partial class CollectionsSidebarPage : Page
 			loadingBar.Visibility = Visibility.Collapsed;
 		}
 	}
+
 	private async Task PopulateFoldersTree()
 	{
 		var folderContextMenu = GenerateContextMenuForFolder();
 		var requestContextMenu = GenerateContextMenuForRequest();
 
 		var folders = await Task.Run(() => GetFolders());
+		//var folders = GetFolders();
 
 		var folderItems = new Dictionary<int, TreeViewItem>();
 		var rootItems = new List<TreeViewItem>();
@@ -106,14 +108,14 @@ public partial class CollectionsSidebarPage : Page
 		foreach (var folder in folders)
 		{
 			// Create TreeViewItem for each folder
-			var newFolder = GenerateCustomFolderTreeViewItem(folder, folderContextMenu);
+			var newFolder = ElementDesigner.GenerateCustomFolderTreeViewItem(folder, folderContextMenu);
 
 
 			// Add requests to the folder
 			foreach (var request in folder.SavedRequests)
 			{
 
-				var requestItem = GenerateCustomRequestTreeViewItem(request, requestContextMenu);
+				var requestItem = ElementDesigner.GenerateCustomRequestTreeViewItem(request, requestContextMenu);
 
 				// Create TreeViewItem for each request
 
@@ -153,70 +155,7 @@ public partial class CollectionsSidebarPage : Page
 	}
 
 
-	#region Generate Custom TreeViewItems
-	private TreeViewItem GenerateCustomFolderTreeViewItem(Folder folder, ContextMenu folderContextMenu)
-	{
-		StackPanel stack = new StackPanel { Orientation = Orientation.Horizontal };
 
-		Image icon = new Image
-		{
-			Source = new BitmapImage(new Uri("pack://application:,,,/Images/folderIcon.png")),
-			Width = 18,
-			Height = 18,
-			Margin = new Thickness(0, 0, 5, 0)
-		};
-
-		TextBlock text = new TextBlock
-		{
-			FontSize = 16,
-			Text = folder.Name,
-			VerticalAlignment = VerticalAlignment.Center
-		};
-
-		stack.Children.Add(icon);
-		stack.Children.Add(text);
-
-		return new TreeViewItem
-		{
-			Header = stack,
-			Name = $"folder{folder.Id}",
-			ContextMenu = folderContextMenu,
-			Tag = folder
-		};
-	}
-
-	private TreeViewItem GenerateCustomRequestTreeViewItem(Request request, ContextMenu requestContextMenu)
-	{
-		StackPanel stack = new StackPanel { Orientation = Orientation.Horizontal };
-
-		Image icon = new Image
-		{
-			Source = new BitmapImage(new Uri("pack://application:,,,/Images/requestIcon.png")),
-			Width = 18,
-			Height = 18,
-			Margin = new Thickness(0, 0, 5, 0)
-		};
-
-		TextBlock text = new TextBlock
-		{
-			FontSize = 16,
-			Text = request.Name,
-			VerticalAlignment = VerticalAlignment.Center
-		};
-
-		stack.Children.Add(icon);
-		stack.Children.Add(text);
-
-		return new TreeViewItem
-		{
-			Header = stack,
-			Name = $"request{request.Id}",
-			ContextMenu = requestContextMenu,
-			Tag = request
-		};
-	}
-
-	#endregion
 
 	#region ContextMenu_Operations
 	private ContextMenu GenerateContextMenuForRequest()
@@ -227,11 +166,6 @@ public partial class CollectionsSidebarPage : Page
 		MenuItem openRequestMenuItem = new MenuItem { Header = "Open" };
 		openRequestMenuItem.Click += Request_Open_Click;
 		contextMenu.Items.Add(openRequestMenuItem);
-
-		// Rename Request MenuItem
-		/*MenuItem renameRequestMenuItem = new MenuItem { Header = "Rename" };
-		renameRequestMenuItem.Click += Request_Rename_Click;
-		contextMenu.Items.Add(renameRequestMenuItem);*/
 
 		// Delete Request MenuItem
 		MenuItem deleteRequestMenuItem = new MenuItem { Header = "Delete" };
@@ -315,7 +249,7 @@ public partial class CollectionsSidebarPage : Page
 
 		if (treeViewItem.Tag is Request request)
 		{
-			//var request = _requestService.GetRequestById(int.Parse(treeViewItem.Name.Remove(0, 7)));
+			//var request = _requelstService.GetRequestById(int.Parse(treeViewItem.Name.Remove(0, 7)));
 			NewRequestOpened?.Invoke(this, request);
 		}
 
@@ -406,7 +340,7 @@ public partial class CollectionsSidebarPage : Page
 	{
 		// Create a new TreeViewItem for the request
 
-		var newRequestTreeViewItem = GenerateCustomRequestTreeViewItem(request, GenerateContextMenuForRequest());
+		var newRequestTreeViewItem = ElementDesigner.GenerateCustomRequestTreeViewItem(request, GenerateContextMenuForRequest());
 
 		// Find the existing parent folder in the TreeView
 		var existingParentFolder = FindTreeViewItemByName(foldersTree.Items, $"folder{request.FolderId}");
@@ -470,9 +404,7 @@ public partial class CollectionsSidebarPage : Page
 
 	private void AddFolderToTree(Folder folder)
 	{
-		// Create a new TreeViewItem for the folder
-
-		var newFolderTreeViewItem = GenerateCustomFolderTreeViewItem(folder, GenerateContextMenuForFolder());
+		var newFolderTreeViewItem = ElementDesigner.GenerateCustomFolderTreeViewItem(folder, GenerateContextMenuForFolder());
 
 		// Check if the folder has a parent
 		if (folder.ParentId is null)
@@ -536,7 +468,7 @@ public partial class CollectionsSidebarPage : Page
 
 
 
-	
+
 
 	private void foldersTree_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
 	{

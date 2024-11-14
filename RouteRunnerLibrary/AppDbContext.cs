@@ -7,7 +7,7 @@ public class AppDbContext : DbContext
 {
 	public DbSet<Folder> Folders { get; set; }
 	public DbSet<Request> Requests { get; set; }
-
+	public DbSet<RequestInHistory> RequestsHistory { get; set; }
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
 		string dbPath = Path.Combine(AppContext.BaseDirectory, "route-runner-app.db");

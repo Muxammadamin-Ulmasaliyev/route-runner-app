@@ -48,7 +48,7 @@ public partial class MainWindow : Window
 	#region Event Handlers
 	private void HandleRequestDeletedEvent(object? sender, Request deletedRequest)
 	{
-		var tabIndex = IfTabAlreadyOpened(deletedRequest);
+		var tabIndex = IsRequestTabAlreadyOpened(deletedRequest);
 		if (tabIndex != -1)
 		{
 			tabItems.RemoveAt(tabIndex);
@@ -56,12 +56,28 @@ public partial class MainWindow : Window
 	}
 	private void CollectionsPage_NewRequestOpened(object? sender, RouteRunnerLibrary.Models.Request request)
 	{
-		var tabIndex = IfTabAlreadyOpened(request);
+		var tabIndex = IsRequestTabAlreadyOpened(request);
 		if (tabIndex != -1)
 		{
 			if (requestsTabControl.SelectedIndex != tabIndex)
 			{
+				mainFrame.Navigate(requestsTabControl.Items[tabIndex]);
+				requestsTabControl.SelectedIndex = tabIndex;
+			}
+		}
+		else
+		{
+			AddNewRequestToTabView(request);
+		}
+	}
 
+	private void HistoryPage_NewRequestOpened(object? sender, RouteRunnerLibrary.Models.Request request)
+	{
+		var tabIndex = IsRequestInHistoryTabAlreadyOpened(request);
+		if (tabIndex != -1)
+		{
+			if (requestsTabControl.SelectedIndex != tabIndex)
+			{
 				mainFrame.Navigate(requestsTabControl.Items[tabIndex]);
 				requestsTabControl.SelectedIndex = tabIndex;
 			}
@@ -179,7 +195,7 @@ public partial class MainWindow : Window
 	/// </summary>
 	/// <param name="request"></param>
 	/// <returns></returns>
-	private int IfTabAlreadyOpened(Request request)
+	private int IsRequestTabAlreadyOpened(Request request)
 	{
 		for (int i = 0; i < requestsTabControl.Items.Count; i++)
 		{
@@ -192,7 +208,18 @@ public partial class MainWindow : Window
 
 	}
 
+	private int IsRequestInHistoryTabAlreadyOpened(Request request)
+	{
+		for (int i = 0; i < requestsTabControl.Items.Count; i++)
+		{
+			if (request.Id == ((requestsTabControl.Items[i] as TabItem).Tag as RequestPage).GetCurrentRequestId())
+			{
+				return i;
+			}
+		}
+		return -1;
 
+	}
 	private void sidebarNavigationView_SelectionChanged(NavigationView sender, RoutedEventArgs args)
 	{
 		var selectedItem = sender.SelectedItem as NavigationViewItem;
@@ -206,7 +233,6 @@ public partial class MainWindow : Window
 				var collectionsPage = new CollectionsSidebarPage();
 				collectionsPage.NewRequestOpened += CollectionsPage_NewRequestOpened;
 				sender.ReplaceContent(collectionsPage);
-
 			}
 			else if (selectedPageType == typeof(EnvironmentsSidebarPage))
 			{
@@ -214,14 +240,14 @@ public partial class MainWindow : Window
 			}
 			else if (selectedPageType == typeof(HistorySidebarPage))
 			{
+				var historyPage = new HistorySidebarPage();
+				historyPage.NewRequestOpened += HistoryPage_NewRequestOpened;
+				sender.ReplaceContent(historyPage);
 			}
 		}
 
 
 	}
-
-
-
 	private void DynamicScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
 	{
 		if (sender is DynamicScrollViewer scrollViewer)
@@ -243,10 +269,7 @@ public partial class MainWindow : Window
 		}
 	}
 
-
-
 	#region Window  Events
-	
 	private void Window_StateChangedOrLoaded(object sender, EventArgs e)
 	{
 		ToggleInfoBarVisibility();
@@ -283,9 +306,6 @@ public partial class MainWindow : Window
 		}
 
 	}
-
-
-
 	private void Window_KeyUp(object sender, KeyEventArgs e)
 	{
 		if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
@@ -297,11 +317,6 @@ public partial class MainWindow : Window
 			ctrlKeyPressed = false;
 		}
 	}
-
-	#endregion
-
-
-
 	private void ToggleInfoBarVisibility()
 	{
 		if (InternetChecker.IsInternetAvailable())
@@ -313,4 +328,9 @@ public partial class MainWindow : Window
 			infoBar.Visibility = Visibility.Visible;
 		}
 	}
+	#endregion
+
+
+
+
 }

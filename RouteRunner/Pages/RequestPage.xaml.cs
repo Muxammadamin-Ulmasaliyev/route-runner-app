@@ -19,9 +19,9 @@ public partial class RequestPage : Page
 
 	private Request _currentRequest;
 	private int _currentTabIndex;
-
 	private readonly SavedRequestService _requestService;
 	private readonly FolderService _folderService;
+	private readonly RequestHistoryService _requestHistoryService;
 	public int GetCurrentRequestId()
 	{
 		return _currentRequest.Id;
@@ -35,20 +35,20 @@ public partial class RequestPage : Page
 
 		_requestService = new(new AppDbContext());
 		_folderService = new(new AppDbContext());
+		_requestHistoryService = new(new AppDbContext());
+
+		_currentTabIndex = currentTabIndex;
+		_currentRequest = currentRequest;
 
 		InitializeComponent();
 		PopulateHttpVerbsComboBox();
-
-		_currentTabIndex = currentTabIndex;
-
-		_currentRequest = currentRequest;
-
 		if (_currentRequest != null)
 		{
 			requestNameTextBox.Text = _currentRequest.Name;
 			urlTextBox.Text = _currentRequest.Url;
 			httpVerbsComboBox.SelectedItem = _currentRequest.HttpVerb;
 			saveRequestButton.IsEnabled = _currentRequest.Id == 0;
+			bodyTextBox.Text = _currentRequest.Body;
 		}
 
 		PopulateHierarchyOfRequest();
@@ -56,8 +56,18 @@ public partial class RequestPage : Page
 		EventNotificationService.Instance.NewRequestCreatedEvent += NewRequestCreatedEvent;
 
 
+		PopulateHeadersDataGrid();
 
+	}
+	private void PopulateHeadersDataGrid()
+	{
+		var headers = new List<Header>()
+		{
+			new Header() { Key = "Content-Type", Value = "application/json" },
+			new Header(){ Key = "32132", Value = "21" }
+		};
 
+		headersDataGrid.ItemsSource = headers;
 	}
 
 	private void PopulateHierarchyOfRequest()
@@ -81,10 +91,10 @@ public partial class RequestPage : Page
 	{
 		if (_currentTabIndex == data.tabIndex)
 		{
-
 			_currentRequest.Id = data.request.Id;
 			_currentRequest.FolderId = data.request.FolderId;
 			requestNameTextBox.Text = data.request.Name;
+
 
 			PopulateHierarchyOfRequest();
 		}
@@ -133,8 +143,23 @@ public partial class RequestPage : Page
 			// Handle exceptions and update UI accordingly
 			UpdateUiForError(ex.Message);
 		}
+		finally
+		{
+			UpsertRequestToHistoryList(_currentRequest);
+		}
 	}
-
+	private void UpsertRequestToHistoryList(Request request)
+	{
+		_requestHistoryService.UpsertRequestInHistory(new RequestInHistory()
+		{
+			RequestId = request.Id,
+			Date = DateTime.Now,
+			Name = request.Name,
+			Url = request.Url,
+			HttpVerb = request.HttpVerb,
+			Body = request.Body
+		});
+	}
 	private async Task<string> GetResponseBody(HttpResponseMessage response, bool formatOutput = true)
 	{
 		string json = await response.Content.ReadAsStringAsync();
@@ -287,6 +312,7 @@ public partial class RequestPage : Page
 		_currentRequest.Name = requestNameTextBox.Text;
 		_currentRequest.HttpVerb = (HttpVerb)httpVerbsComboBox.SelectedItem;
 		_currentRequest.Url = urlTextBox.Text;
+		_currentRequest.Body = bodyTextBox.Text;
 
 		if (_currentRequest.Id == 0 || _currentRequest is null)
 		{
@@ -335,15 +361,53 @@ public partial class RequestPage : Page
 
 	private void httpVerbsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 	{
+		_currentRequest.HttpVerb = (HttpVerb)httpVerbsComboBox.SelectedItem;
 		saveRequestButton.IsEnabled = true;
 	}
 
 	private void urlTextBox_TextChanged(object sender, TextChangedEventArgs e)
 	{
+		_currentRequest.Url = urlTextBox.Text;
 		saveRequestButton.IsEnabled = true;
+	}
+
+	private void bodyTextBox_TextChanged(object sender, TextChangedEventArgs e)
+	{
+		_currentRequest.Body = bodyTextBox.Text;
+		saveRequestButton.IsEnabled = true;
+	}
+
+	private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+	{
 
 	}
 
+	private void DynamicScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+	{
+		var scrollViewer = sender as ScrollViewer;
 
+		if (scrollViewer != null)
+		{
+			// Check if the user is scrolling up or down
+			if (e.Delta > 0)
+			{
+				// Scroll up
+				scrollViewer.LineUp();
+			}
+			else
+			{
+				// Scroll down
+				scrollViewer.LineDown();
+			}
+
+			// Mark the event as handled so that the default scrolling doesn't occur
+			e.Handled = true;
+		}
+	}
+
+	private void headersDataGrid_ScrollChanged(object sender, ScrollChangedEventArgs e)
+	{
+
+	}
 }
 
