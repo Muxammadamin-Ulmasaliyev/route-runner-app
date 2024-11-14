@@ -17,15 +17,16 @@
 3. Save and organize your requests into folders.
 4. Use upcoming features such as API headers, authentication, request history, and environment files to enhance your API testing.
 
-## Technologies Used :too
+## Technologies Used 🧰
 
-- **.NET 8**
+- **.NET 9**
 - **WPF**
 - **Lepoco WPF UI library**
 - **SQLite** for storing saved requests and folders
 
 ## Screenshots 📷
-![RouteRunner v2.0](Images/screenshot%20main.png)
+![RouteRunner v2.0](Images/night.png)
+![RouteRunner v2.0](Images/light.png)
 
 ## Upcoming Features 💡
 - Adding API headers
