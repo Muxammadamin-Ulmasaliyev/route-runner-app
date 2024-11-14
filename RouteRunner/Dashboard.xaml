@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="clr-namespace:RouteRunner.Pages"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    Title="RouteRunner v1.1"
+    Title="RouteRunner v1.2 beta"
     Width="800"
     Height="550"
     MinWidth="800"
@@ -95,7 +95,7 @@
                 Panel.ZIndex="1"
                 FontTypography="TitleLarge"
                 Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                Text="Route Runner v1.1 beta" />
+                Text="Route Runner v1.2 beta" />
 
         </Grid>
         <Grid Grid.Row="1" Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}">

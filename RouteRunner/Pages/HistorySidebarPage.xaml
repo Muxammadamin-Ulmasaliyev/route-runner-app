@@ -11,7 +11,15 @@
     d:DesignHeight="650"
     d:DesignWidth="400"
     mc:Ignorable="d">
-
+    <Grid Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}">
+        <ui:TextBlock
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontTypography="Title"
+            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+            Text="this is environments page" />
+    </Grid>
+    <!--
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
@@ -60,4 +68,5 @@
 
         </Grid>
     </Grid>
+    -->
 </Page>

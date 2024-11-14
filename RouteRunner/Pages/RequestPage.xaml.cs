@@ -56,19 +56,19 @@ public partial class RequestPage : Page
 		EventNotificationService.Instance.NewRequestCreatedEvent += NewRequestCreatedEvent;
 
 
-		PopulateHeadersDataGrid();
+		//PopulateHeadersDataGrid();
 
 	}
-	private void PopulateHeadersDataGrid()
-	{
-		var headers = new List<Header>()
-		{
-			new Header() { Key = "Content-Type", Value = "application/json" },
-			new Header(){ Key = "32132", Value = "21" }
-		};
+	//private void PopulateHeadersDataGrid()
+	//{
+	//	var headers = new List<Header>()
+	//	{
+	//		new Header() { Key = "Content-Type", Value = "application/json" },
+	//		new Header(){ Key = "32132", Value = "21" }
+	//	};
 
-		headersDataGrid.ItemsSource = headers;
-	}
+	//	headersDataGrid.ItemsSource = headers;
+	//}
 
 	private void PopulateHierarchyOfRequest()
 	{

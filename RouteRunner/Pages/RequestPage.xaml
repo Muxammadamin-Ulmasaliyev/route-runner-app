@@ -218,7 +218,13 @@
 
                         </TabItem>
                         <TabItem FontWeight="SemiBold" Header="Headers">
-                            <Grid>
+                            <ui:TextBlock
+                                Width="Auto"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontTypography="BodyStrong"
+                                Text="This feauture is in development process" />
+                            <!-- <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
@@ -258,7 +264,7 @@
                                             Header="Description" />
                                     </DataGrid.Columns>
                                 </DataGrid>
-                            </Grid>
+                            </Grid>-->
 
 
                         </TabItem>
